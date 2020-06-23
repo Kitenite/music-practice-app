@@ -1,0 +1,43 @@
+<div id="screen">
+
+    <!-- Sync button -->
+    <div id="sync">
+        <img id="sync-button" src="/assets/images/sync.png" (click)="sync();" type="button"/>
+    </div>
+
+    <!-- Active client count -->
+    <div id="clients">
+        <span id="online-icon"></span>
+        <span id="client-count">1</span> PLAYERS ONLINE
+    </div>
+
+    <!-- Display BPM -->
+    <div id="display-box">
+        <p id="tempo-display">{{tempo}}</p>
+    </div>
+
+    <!-- Blink on beat -->
+    <div id="blinkers" (click)="toggleResolution();">
+        <div id="blink-1" class="blink"></div>
+        <div id="blink-2" class="blink"></div>
+        <div id="blink-3" class="blink"></div>
+        <div id="blink-4" class="blink"></div>
+    </div>
+
+     <!-- Tempo -->
+    <div id="tempo-box">
+        <input id="tempo-scroll" type="range" min="35.0" max="270.0" step="1" value="120" (input)="tempo=$event.target.value; toggleTempoButton();">
+        <br/>
+        <button class="inactive" id="tempo-button" type="button" (click)="sendTempo();">Update BPM</button>
+    </div>
+
+    <!-- Media buttons -->
+    <div id="media-buttons">
+        <img id="tempo-change-button" src="/assets/images/minus.png" (click)="tempoChange(-1)" type="button"/>
+        <img id="play-button" src="/assets/images/play.png" (click)="emitPlay();" type="button"/>
+        <img id="tempo-change-button" src="/assets/images/plus.png" (click)="tempoChange(1)" type="button"/>
+    </div>
+
+
+
+</div> 

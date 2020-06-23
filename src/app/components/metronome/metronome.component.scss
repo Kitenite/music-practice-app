@@ -1,0 +1,349 @@
+/* Global */
+$main-white:white;
+    $main-blue:#74C9FF;
+    $alt-blue:#5ABEFE;
+    $main-green:#66E1B7;
+    $main-grey:#CBCBCB;
+    $main-red:#FF9393;
+    $main-txt-color:#6E6A6A;
+
+  
+  :host {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: $main-txt-color;
+  }
+  
+  /* images (secretly buttons) */
+  
+  img {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  
+    &:hover {
+      filter: brightness(95%);
+      cursor: pointer;
+    }
+  
+    &:active {
+      filter: brightness(110%);
+    }
+  }
+  
+  /* buttons */
+  
+  button {
+    background-color: $main-blue;
+    border-radius: 28px;
+    border: 0px solid #29668f;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: Arial;
+    font-size: 17px;
+    padding: 12px 31px;
+    text-decoration: none;
+  
+    &:hover {
+      background-color: $alt-blue;
+    }
+  
+    &:active {
+      position: relative;
+      top: 1px;
+    }
+  
+    &:focus {
+      outline: none;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
+  }
+  
+  input[type=range] {
+    -webkit-appearance: none;
+    margin: 10px 0;
+    width: 100%;
+  
+    &:focus {
+      outline: none;
+    }
+  
+    &::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 2.5vh;
+      cursor: pointer;
+      animate: 0.2s;
+      box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+      background: $main-blue;
+      border-radius: 2vh;
+      border: 0px solid $main-blue;
+    }
+  
+    &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      background: $main-white;
+      border: 0.25rem solid $main-blue;
+      margin-top: -0.45rem;
+      height: 2.3rem;
+      width: 2.3rem;
+      border-radius: 2.5vh;
+      cursor: pointer;
+    }
+  
+    &:focus::-webkit-slider-runnable-track {
+      background: $main-blue;
+    }
+  
+    &::-moz-range-track {
+      width: 100%;
+      height: 12.8px;
+      cursor: pointer;
+      animate: 0.2s;
+      box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+      background: $main-blue;
+      border-radius: 1vh;
+      border: 0px solid $main-blue;
+    }
+  
+    &::-moz-range-thumb {
+      box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+      border: 0px solid #000000;
+      height: 20px;
+      width: 39px;
+      border-radius: 7px;
+      background: #65001c;
+      cursor: pointer;
+    }
+  
+    &::-ms-track {
+      width: 100%;
+      height: 12.8px;
+      cursor: pointer;
+      animate: 0.2s;
+      background: transparent;
+      border-color: transparent;
+      border-width: 39px 0;
+      color: transparent;
+    }
+  
+    &::-ms-fill-lower {
+      background: #ac51b5;
+      border: 0px solid #000101;
+      border-radius: 50px;
+      box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    }
+  
+    &::-ms-fill-upper {
+      background: $main-blue;
+      border: 0px solid #000101;
+      border-radius: 50px;
+      box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+    }
+  
+    &::-ms-thumb {
+      box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
+      border: 0px solid #000000;
+      height: 20px;
+      width: 39px;
+      border-radius: 7px;
+      background: $main-blue;
+      cursor: pointer;
+    }
+  
+    &:focus {
+      &::-ms-fill-lower, &::-ms-fill-upper {
+        background: $main-blue;
+      }
+    }
+  }
+  
+  /* Handles firefox */
+  
+  /* handles IE */
+  
+  /* App container */
+  
+  #screen {
+    background: $main-white;
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    resize: both;
+    flex-direction: column;
+  }
+  
+  /* Sync button */
+  
+  #sync {
+    width: 40%;
+    height: 7%;
+  }
+  
+  #sync-button {
+    float: right;
+    height: 3rem;
+    width: 3rem;
+  }
+  
+  /* Active clients */
+  
+  #clients {
+    height: 5%;
+    font-size: 2.3vh;
+    font-weight: bold;
+  }
+  
+  #online-icon {
+    height: 1rem;
+    width: 1rem;
+    background-color: $main-green;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.5rem;
+  }
+  
+  /* BPM display */
+  
+  #display-box {
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  #tempo-display {
+    font-size: 10vh;
+  
+    /* noselect for text */
+    -webkit-touch-callout: none;
+  
+    /* iOS Safari */
+    -webkit-user-select: none;
+  
+    /* Safari */
+    -khtml-user-select: none;
+  
+    /* Konqueror HTML */
+    -moz-user-select: none;
+  
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+  
+    /* Internet Explorer/Edge */
+    user-select: none;
+  
+    /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+  
+    &:hover {
+      cursor: default;
+    }
+  }
+  
+  /* Use to make button inactive */
+  
+  .inactive {
+    background-color: $main-grey;
+    pointer-events: none;
+  }
+  
+  /* Blinkers and animation  */
+  
+  #blinkers {
+    margin: 2rem;
+    display: flex;
+    justify-content: space-around;
+    width: 30vw;
+  
+    &:hover {
+      cursor: pointer;
+      filter: brightness(95%);
+    }
+  
+    &:active {
+      filter: brightness(110%);
+    }
+  }
+  
+  .blink {
+    height: 2.5rem;
+    width: 2.5rem;
+    background-color: $main-grey;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  @-webkit-keyframes blink-animation {
+    0% {
+      background-color: $main-red;
+    }
+  
+    100% {
+      background-color: $main-grey;
+    }
+  }
+  
+  .makeBlink {
+    -webkit-animation-name: blink-animation;
+    -webkit-animation-duration: 900ms;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-timing-function: ease-in-out;
+  }
+  
+  /* tempo scroll */
+  
+  #tempo-box {
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    resize: both;
+    flex-direction: column;
+  }
+  
+  /* tempo-scroll */
+  
+  #tempo-scroll {
+    width: 25vw !important;
+  }
+  
+  /* Media buttons */
+  
+  #media-buttons {
+    height: 20%;
+    display: flex;
+    align-items: center;
+  }
+  
+  #play-button {
+    width: 5rem;
+    height: 5rem;
+  }
+  
+  #tempo-change-button {
+    width: 3rem;
+    height: 3rem;
+    margin: 2rem;
+  }
+  
+  /* Mobile */
+  @media screen and (max-width: 600px) {
+    #sync {
+      width: 90%;
+      height: 7vh;
+    }
+  
+    #tempo-scroll {
+      width: 80vw !important;
+    }
+  
+    #blinkers {
+      width: 90vw;
+    }
+  }

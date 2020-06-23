@@ -123,6 +123,12 @@
           }
         }
       }
-    }},
-  "defaultProject": "practice-app"
+    }
+  },
+  "defaultProject": "practice-app",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }
