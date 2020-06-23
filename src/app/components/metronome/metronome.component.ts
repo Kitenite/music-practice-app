@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { TimeSyncService } from '../../services/time-sync.service'
 import { NextBeat } from '../../models/next-beat'
+import { MetronomeAudioService } from 'src/app/metronome-audio.service';
 
 @Component({
   selector: 'app-metronome',
@@ -14,9 +15,13 @@ export class MetronomeComponent implements OnInit {
   tempo = 120;
 
   nextBeat:NextBeat;
-  constructor(private timeSyncService:TimeSyncService) { }
+  constructor(
+    private timeSyncService:TimeSyncService,
+    private metronomeAudio:MetronomeAudioService
+  ) {}
 
   ngOnInit(): void {
+    this.metronomeAudio.init();
     this.requestNextBeat();
     this.timeSyncService.subscribeNextBeat().subscribe(nextBeat => this.nextBeat = nextBeat);
   }
@@ -28,6 +33,7 @@ export class MetronomeComponent implements OnInit {
   // Media client handlers
   emitPlay(){
     console.log("play")
+    this.metronomeAudio.play()
   }
 
   sync(){
@@ -49,9 +55,5 @@ export class MetronomeComponent implements OnInit {
   toggleTempoButton(){
     console.log("toggle tempo button")
   }
-
-
-
-  
 
 }

@@ -1,9 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { AppComponent } from './app.component';
+// External libraries
+import { AudioContextModule } from 'angular-audio-context';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+// Custom components
+import { AppComponent } from './app.component';
 import { MetronomeComponent } from './components/metronome/metronome.component';
+
 
 const socketConfig: SocketIoConfig = { url: 'https://sync-metronome.herokuapp.com', options: {} };
 
@@ -14,9 +19,10 @@ const socketConfig: SocketIoConfig = { url: 'https://sync-metronome.herokuapp.co
   ],
   imports: [
     BrowserModule,
-    SocketIoModule.forRoot(socketConfig)
+    SocketIoModule.forRoot(socketConfig),
+    AudioContextModule.forRoot('balanced')
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
