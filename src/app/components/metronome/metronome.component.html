@@ -34,7 +34,7 @@
     <!-- Media buttons -->
     <div id="media-buttons">
         <img id="tempo-change-button" src="/assets/images/minus.png" (click)="tempoChange(-1)" type="button"/>
-        <img id="play-button" src="/assets/images/play.png" (click)="emitPlay();" type="button"/>
+        <img id="play-button" [src]="playerState.state == 2 ? '/assets/images/play.png' : '/assets/images/pause.png'" (click)="emitPlay();" type="button"/>
         <img id="tempo-change-button" src="/assets/images/plus.png" (click)="tempoChange(1)" type="button"/>
     </div>
 
