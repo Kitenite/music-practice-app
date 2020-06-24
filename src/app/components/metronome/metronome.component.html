@@ -13,7 +13,7 @@
 
     <!-- Display BPM -->
     <div id="display-box">
-        <p id="tempo-display">{{tempo}}</p>
+        <p id="tempo-display">{{ playerState.tempo }}</p>
     </div>
 
     <!-- Blink on beat -->
@@ -26,7 +26,7 @@
 
      <!-- Tempo -->
     <div id="tempo-box">
-        <input id="tempo-scroll" type="range" min="35.0" max="270.0" step="1" value="120" (input)="tempo=$event.target.value; toggleTempoButton();">
+        <input id="tempo-scroll" type="range" min="35.0" max="270.0" step="1" value="120" (input)="playerState.tempo=$event.target.value; toggleTempoButton();">
         <br/>
         <button class="inactive" id="tempo-button" type="button" (click)="sendTempo();">Update BPM</button>
     </div>
@@ -37,7 +37,5 @@
         <img id="play-button" src="/assets/images/play.png" (click)="emitPlay();" type="button"/>
         <img id="tempo-change-button" src="/assets/images/plus.png" (click)="tempoChange(1)" type="button"/>
     </div>
-
-
 
 </div> 

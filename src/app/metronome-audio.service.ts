@@ -9,19 +9,6 @@ export class MetronomeAudioService{
 
   constructor(private _audioContext: AudioContext) {}
 
-  async beep() {
-    if (this._audioContext.state === 'suspended') {
-        await this._audioContext.resume();
-    }
-    const oscillatorNode = this._audioContext.createOscillator();
-
-    oscillatorNode.onended = () => oscillatorNode.disconnect();
-    oscillatorNode.connect(this._audioContext.destination);
-
-    oscillatorNode.start();
-    oscillatorNode.stop(this._audioContext.currentTime + 0.5);
-  }
-
   unlocked:boolean = false;
   isPlaying:boolean = false;      // Are we currently playing?
   startTime:number;              // The start time of the entire sequence.
