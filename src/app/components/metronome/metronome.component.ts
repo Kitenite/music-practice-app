@@ -13,8 +13,10 @@ import { PlayerState } from 'src/app/models/player-state-enum'
 })
 
 export class MetronomeComponent implements OnInit {
-  // Variables:
-  playerState:MetronomePlayer = new MetronomePlayer()
+  // Variables
+  playerState:MetronomePlayer = new MetronomePlayer();
+  clientCount:number = 1;
+
   constructor(
     private timeSyncService:TimeSyncService,
     public metronomeAudio:MetronomeAudioService
@@ -23,8 +25,8 @@ export class MetronomeComponent implements OnInit {
   ngOnInit(): void {
     this.metronomeAudio.init();
     this.timeSyncService.subscribeNextBeat().subscribe(nextBeat => this.nextBeatReceived(nextBeat));
+    this.timeSyncService.subscribeClientCount().subscribe(clientCount => this.clientCount = clientCount.count)
   }
-
 
   nextBeatReceived(data:NextBeat){
     console.log(data)
@@ -34,7 +36,7 @@ export class MetronomeComponent implements OnInit {
     }
     var nextBeat = data.nextBeat
     var timeDifference = nextBeat - Date.now();
-    while (timeDifference <= 0){
+    while (timeDifference < 1){
       nextBeat+=this.playerState.rate;
       timeDifference = nextBeat - Date.now();
     }
@@ -46,8 +48,6 @@ export class MetronomeComponent implements OnInit {
       }
     }, timeDifference);
   }
-
-
 
   // Media client handlers
   emitPlay(){
@@ -87,6 +87,7 @@ export class MetronomeComponent implements OnInit {
 
   toggleResolution(){
     console.log("toggle resolution")
+    this.metronomeAudio.toggleResolution();
   }
 
 }

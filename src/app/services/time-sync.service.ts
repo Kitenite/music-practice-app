@@ -15,6 +15,10 @@ export class TimeSyncService {
     return this.socket.fromEvent('nextBeatSent');
   }
 
+  subscribeClientCount():Observable<any>{
+    return this.socket.fromEvent('clientCount');
+  }
+
   requestNextBeat():void{
     this.socket.emit('requestNextBeat');
   }

@@ -26,10 +26,11 @@ export class MetronomeAudioService{
   notesInQueue = [];      // the notes that have been put into the web audio,
                             // and may or may not have played yet. {note, time}
   timerWorker:Worker;     // The Web Worker used to fire timer messages
-
+  notePartition:number = -1;
   updateTempo(tempo:number){
     this.tempo = 120.0;
   }
+  
   nextNote() {
       // Advance current note and time by a 16th note...
       let secondsPerBeat:number = 60.0 / this.tempo;    // Notice this picks up the CURRENT
@@ -40,6 +41,16 @@ export class MetronomeAudioService{
       if (this.current16thNote == 16) {
           this.current16thNote = 0;
       }
+  }
+
+  toggleResolution(){
+    this.noteResolution = (this.noteResolution+1)%3;
+  }
+
+  incrementPartition(){
+    if(this.current16thNote%4 == 0){
+      this.notePartition = (this.current16thNote)/4;
+    }
   }
 
   scheduleNote(beatNumber, time) {
@@ -60,9 +71,9 @@ export class MetronomeAudioService{
           osc.frequency.value = this.soundFrequency
       else                        // other 16th notes = low pitch
           osc.frequency.value = this.soundFrequency/2;
-
       osc.start( time );
       osc.stop( time + this.noteLength );
+      this.incrementPartition();
   }
 
   scheduler() {
@@ -96,41 +107,14 @@ export class MetronomeAudioService{
         return true;
     }
   }
-  lastNotePartition = -1;
-
-  // TODO: Drawing should be happing in component
-  draw() {
-    let currentNote:number = this.last16thNoteDrawn;
-    let currentTime:number = this._audioContext.currentTime;
-
-    while (this.notesInQueue.length && this.notesInQueue[0].time < currentTime) {
-        currentNote = this.notesInQueue[0].note;
-        this.notesInQueue.splice(0,1);   // remove note from queue
-    }
-    // We only need to draw if the note has moved.
-    // Not partition since we only care about every 4 notes
-    let notePartition = currentNote/4
-    if (this.last16thNoteDrawn != currentNote && this.lastNotePartition !=notePartition) {
-      // TODO: Need to turn this into an observable
-      // blink(blinkers.eq(notePartition))
-      this.lastNotePartition = notePartition;
-      this.last16thNoteDrawn = currentNote;
-    }
-    // set up to draw again
-    // requestAnimFrame(draw);
-  }
 
   init(){
-    // TODO: Blinkers should be done in metronome component
-    // blinkers = $("#blinkers").children();
-
     // NOTE: THIS RELIES ON THE MONKEYPATCH LIBRARY BEING LOADED FROM
     // Http://cwilso.github.io/AudioContext-MonkeyPatch/AudioContextMonkeyPatch.js
     // TO WORK ON CURRENT CHROME!!  But this means our code can be properly
     // spec-compliant, and work on Chrome, Safari and Firefox.
     // if we wanted to load audio files, etc., this is where we should do it.
 
-    // requestAnimFrame(draw);    // start the drawing loop.
     this.timerWorker = new Worker('src/app/services/metronome.worker.ts', { type: 'module' });
     this.timerWorker.onmessage = ({ data }) => {
       if (data == "tick") {

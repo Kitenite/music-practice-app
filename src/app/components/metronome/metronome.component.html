@@ -7,20 +7,20 @@
     <!-- Active client count -->
     <div id="clients">
         <span id="online-icon"></span>
-        <span id="client-count">1</span> PLAYERS ONLINE
+        <span id="client-count">{{ this.clientCount }}</span> PLAYERS ONLINE
     </div>
 
     <!-- Display BPM -->
     <div id="display-box">
-        <p id="tempo-display">{{ this.playerState.tempo }} {{ this.metronomeAudio.tempo }}</p>
+        <p id="tempo-display">{{ this.playerState.tempo }}</p>
     </div>
 
     <!-- Blink on beat -->
     <div id="blinkers" (click)="toggleResolution();">
-        <div id="blink-1" class="blink"></div>
-        <div id="blink-2" class="blink"></div>
-        <div id="blink-3" class="blink"></div>
-        <div id="blink-4" class="blink"></div>
+        <div id="blink-0" class="blink" [ngClass]="{'makeBlink':this.metronomeAudio.notePartition == 0}"></div>
+        <div id="blink-1" class="blink" [ngClass]="{'makeBlink':this.metronomeAudio.notePartition == 1}"></div>
+        <div id="blink-2" class="blink" [ngClass]="{'makeBlink':this.metronomeAudio.notePartition == 2}"></div>
+        <div id="blink-3" class="blink" [ngClass]="{'makeBlink':this.metronomeAudio.notePartition == 3}"></div>
     </div>
 
      <!-- Tempo -->
