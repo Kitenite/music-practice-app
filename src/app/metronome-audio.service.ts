@@ -27,7 +27,9 @@ export class MetronomeAudioService{
                             // and may or may not have played yet. {note, time}
   timerWorker:Worker;     // The Web Worker used to fire timer messages
 
-
+  updateTempo(tempo:number){
+    this.tempo = 120.0;
+  }
   nextNote() {
       // Advance current note and time by a 16th note...
       let secondsPerBeat:number = 60.0 / this.tempo;    // Notice this picks up the CURRENT
@@ -40,7 +42,7 @@ export class MetronomeAudioService{
       }
   }
 
-  scheduleNote( beatNumber, time ) {
+  scheduleNote(beatNumber, time) {
       // push the note on the queue, even if we're not playing.
       this.notesInQueue.push( { note: beatNumber, time: time } );
 

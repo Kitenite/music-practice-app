@@ -15,10 +15,9 @@ import { PlayerState } from 'src/app/models/player-state-enum'
 export class MetronomeComponent implements OnInit {
   // Variables:
   playerState:MetronomePlayer = new MetronomePlayer()
-
   constructor(
     private timeSyncService:TimeSyncService,
-    private metronomeAudio:MetronomeAudioService
+    public metronomeAudio:MetronomeAudioService
   ) {}
 
   ngOnInit(): void {
@@ -28,10 +27,11 @@ export class MetronomeComponent implements OnInit {
 
 
   nextBeatReceived(data:NextBeat){
-    if (this.playerState.state != PlayerState.Waiting){
-      return
+    console.log(data)
+    this.playerState.tempo = this.metronomeAudio.tempo = data.tempo
+    if (this.playerState.state == PlayerState.Paused){
+      return;
     }
-    this.updateTempo(data.tempo)
     var nextBeat = data.nextBeat
     var timeDifference = nextBeat - Date.now();
     while (timeDifference <= 0){
@@ -51,7 +51,6 @@ export class MetronomeComponent implements OnInit {
 
   // Media client handlers
   emitPlay(){
-    console.log("play")
     // Activate playing onclick, necessary for browsers
     if (this.playerState.firstPlay){
       this.metronomeAudio.play()
@@ -62,8 +61,6 @@ export class MetronomeComponent implements OnInit {
     // Request next beat from server
     if(!this.metronomeAudio.isPlaying){
       this.timeSyncService.requestNextBeat();
-      // Angular way of change this based on waiting for beat 
-      // $("#play-button").attr("src","/images/wait.png");
       this.playerState.state = PlayerState.Waiting;
     } else{
       this.playBeat() // Toggle play button
@@ -80,27 +77,16 @@ export class MetronomeComponent implements OnInit {
   }
 
   sync(){
-    console.log("sync")
+    this.timeSyncService.syncDevices();
   }
 
   sendTempo(){
     console.log("sendTempo")
-  }
-
-  tempoChange(amount:number){
-    console.log("tempo change", amount)
+    this.timeSyncService.requestNewTempo(this.playerState.tempo)
   }
 
   toggleResolution(){
     console.log("toggle resolution")
-  }
-
-  toggleTempoButton(){
-    console.log("toggle tempo button")
-  }
-
-  updateTempo(tempo){
-
   }
 
 }

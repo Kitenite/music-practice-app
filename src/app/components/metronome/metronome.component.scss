@@ -244,12 +244,6 @@ $main-white:white;
     }
   }
   
-  /* Use to make button inactive */
-  
-  .inactive {
-    background-color: $main-grey;
-    pointer-events: none;
-  }
   
   /* Blinkers and animation  */
   
@@ -330,6 +324,13 @@ $main-white:white;
     width: 3rem;
     height: 3rem;
     margin: 2rem;
+  }
+
+  #tempo-update-button {  
+    &:disabled  {
+      background-color: $main-grey;
+      pointer-events: none;
+    }
   }
   
   /* Mobile */
