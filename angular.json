@@ -134,7 +134,7 @@
   "defaultProject": "practice-app",
   "schematics": {
     "@schematics/angular:component": {
-      "styleext": "scss"
+      "style": "scss"
     }
   }
 }
