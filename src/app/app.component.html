@@ -1,6 +1,10 @@
-<mat-slider min="1" max="100" step="1" value="1"></mat-slider>
+<nav mat-tab-nav-bar>
+    <a mat-tab-link
+        *ngFor="let link of navLinks"
+        [routerLink]="link.link"
+        routerLinkActive #rla="routerLinkActive"
+        [active]="rla.isActive"> {{ link.label }}
+    </a>
+</nav>
 
-<button routerLink="/metronome">Metronome</button>
-<button routerLink="/tuner">Tuner</button>
-<button routerLink="/drone">Drone</button>
 <router-outlet></router-outlet>

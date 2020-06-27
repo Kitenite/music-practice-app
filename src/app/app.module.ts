@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSliderModule } from '@angular/material/slider';
+import {MatTabsModule} from '@angular/material/tabs';
 
 // Custom components
 import { AppComponent } from './app.component';
@@ -20,11 +20,9 @@ import { MetronomeModule } from './metronome/metronome.module';
     AppRoutingModule,
     MetronomeModule,
     BrowserAnimationsModule,
-    MatSliderModule
+    MatTabsModule
   ],
-  exports: [
-    MatSliderModule
-  ],
+  exports: [],
   providers: [],
   bootstrap: [AppComponent],
   
