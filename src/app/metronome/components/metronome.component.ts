@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 
+// Custom imports
 import { TimeSyncService } from '../services/time-sync.service'
 import { NextBeat } from '../models/next-beat'
 import { MetronomeAudioService } from '../services/metronome-audio.service';
@@ -14,6 +16,7 @@ import { PlayerState } from '../models/player-state-enum'
 
 export class MetronomeComponent implements OnInit {
   // Variables
+  private ngUnsubscribe = new Subject();
   playerState:MetronomePlayer = new MetronomePlayer();
   clientCount:number = 1;
 
@@ -26,6 +29,15 @@ export class MetronomeComponent implements OnInit {
     this.metronomeAudio.init();
     this.timeSyncService.subscribeNextBeat().subscribe(nextBeat => this.nextBeatReceived(nextBeat));
     this.timeSyncService.subscribeClientCount().subscribe(clientCount => this.clientCount = clientCount.count)
+  }
+
+  ngOnDestroy() {
+    if (this.metronomeAudio.isPlaying){
+      this.metronomeAudio.play()
+      this.playerState.state = PlayerState.Paused;
+    }
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
   }
 
   nextBeatReceived(data:NextBeat){
