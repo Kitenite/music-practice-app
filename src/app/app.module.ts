@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 
 // Custom modules
+import { AppRoutingModule } from './app-routing.module'
 import { MetronomeModule } from './metronome/metronome.module';
 
 
@@ -14,6 +15,7 @@ import { MetronomeModule } from './metronome/metronome.module';
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     MetronomeModule
   ],
   providers: [],
