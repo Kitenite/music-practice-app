@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 // Custom imports
 import { TimeSyncService } from '../services/time-sync.service'
@@ -27,8 +28,8 @@ export class MetronomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.metronomeAudio.init();
-    this.timeSyncService.subscribeNextBeat().subscribe(nextBeat => this.nextBeatReceived(nextBeat));
-    this.timeSyncService.subscribeClientCount().subscribe(clientCount => this.clientCount = clientCount.count)
+    this.timeSyncService.subscribeNextBeat().pipe(takeUntil(this.ngUnsubscribe)).subscribe(nextBeat => this.nextBeatReceived(nextBeat));
+    this.timeSyncService.subscribeClientCount().pipe(takeUntil(this.ngUnsubscribe)).subscribe(clientCount => this.clientCount = clientCount.count)
   }
 
   ngOnDestroy() {

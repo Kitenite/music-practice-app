@@ -7,24 +7,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  
   title = 'practice-app';
   navLinks: any[];
   activeLinkIndex = -1; 
   constructor(private router: Router) {
     this.navLinks = [
-        {
-            label: 'Metronome',
-            link: '/metronome',
-            index: 0
-        }, {
-            label: 'Tuner',
-            link: '/tuner',
-            index: 1
-        }, {
-            label: 'Drone',
-            link: '/drone',
-            index: 2
-        }, 
+      {
+        label: 'Metronome',
+        link: '/metronome',
+        index: 0
+      }, {
+        label: 'Tuner',
+        link: '/tuner',
+        index: 1
+      }, {
+        label: 'Drone',
+        link: '/drone',
+        index: 2
+      }, 
     ];
   }
   ngOnInit(): void {
