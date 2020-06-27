@@ -1,4 +1,4 @@
-import { PlayerState } from 'src/app/models/player-state-enum'
+import { PlayerState } from './player-state-enum'
  
 export class MetronomePlayer {
     tempo:number = 120;

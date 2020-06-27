@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { TimeSyncService } from '../../services/time-sync.service'
-import { NextBeat } from '../../models/next-beat'
-import { MetronomeAudioService } from 'src/app/metronome-audio.service';
-import { MetronomePlayer } from 'src/app/models/metronome-player';
-import { PlayerState } from 'src/app/models/player-state-enum'
+import { TimeSyncService } from '../services/time-sync.service'
+import { NextBeat } from '../models/next-beat'
+import { MetronomeAudioService } from '../services/metronome-audio.service';
+import { MetronomePlayer } from '../models/metronome-player';
+import { PlayerState } from '../models/player-state-enum'
 
 @Component({
   selector: 'app-metronome',

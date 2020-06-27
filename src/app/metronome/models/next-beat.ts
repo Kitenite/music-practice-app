@@ -1,4 +1,4 @@
-export class NextBeat {
+export interface NextBeat {
     nextBeat:number;
     tempo:number;
 }

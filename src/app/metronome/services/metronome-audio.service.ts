@@ -10,23 +10,20 @@ export class MetronomeAudioService{
   constructor(private _audioContext: AudioContext) {}
 
   unlocked:boolean = false;
-  isPlaying:boolean = false;      // Are we currently playing?
+  isPlaying:boolean = false;
   startTime:number;              // The start time of the entire sequence.
-  current16thNote;        // What note is currently last scheduled?
+  current16thNote:number;        // What note is currently last scheduled?
   tempo:number = 120.0;          // tempo (in beats per minute)
   lookahead:number = 25.0;       // How frequently to call scheduling function
   soundFrequency:number = 880.0;
-  scheduleAheadTime:number = 0.1;    // How far ahead to schedule audio (sec)
-                            // This is calculated from lookahead, and overlaps
-                            // with next interval (in case the timer is late)
+  scheduleAheadTime:number = 0.1;// How far ahead to schedule audio (sec) with next interval (in case the timer is late)
   nextNoteTime:number = 0.0;     // when the next note is due.
   noteResolution:number = 2;     // 0 == 16th, 1 == 8th, 2 == quarter note
   noteLength:number = 0.05;      // length of "beep" (in seconds)
-  last16thNoteDrawn:number = -1; // the last "box" we drew on the screen
-  notesInQueue = [];      // the notes that have been put into the web audio,
-                            // and may or may not have played yet. {note, time}
-  timerWorker:Worker;     // The Web Worker used to fire timer messages
+  notesInQueue = [];             // the notes that have been put into the web audio, and may or may not have played yet. {note, time}
+  timerWorker:Worker;          
   notePartition:number = -1;
+
   updateTempo(tempo:number){
     this.tempo = 120.0;
   }
@@ -115,7 +112,7 @@ export class MetronomeAudioService{
     // spec-compliant, and work on Chrome, Safari and Firefox.
     // if we wanted to load audio files, etc., this is where we should do it.
 
-    this.timerWorker = new Worker('src/app/services/metronome.worker.ts', { type: 'module' });
+    this.timerWorker = new Worker('./metronome.worker.ts', { type: 'module' });
     this.timerWorker.onmessage = ({ data }) => {
       if (data == "tick") {
         this.scheduler();
