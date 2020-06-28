@@ -18,12 +18,12 @@ export class AppComponent {
         link: '/metronome',
         index: 0
       }, {
-        label: 'Tuner',
-        link: '/tuner',
-        index: 1
-      }, {
         label: 'Drone',
         link: '/drone',
+        index: 1
+      }, {
+        label: 'Tuner',
+        link: '/tuner',
         index: 2
       }, 
     ];

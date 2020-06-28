@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { DroneComponent } from './drone.component';
+import { DroneComponent } from './components/drone.component';
 
 const routes: Routes = [{ path: '', component: DroneComponent }];
 
