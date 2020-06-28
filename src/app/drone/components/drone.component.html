@@ -1,3 +1,5 @@
 <div *ngFor="let note of notes">
     <button (click)="playNote(note)" [ngClass]="{'active': note==activeNote}">{{ note.name }}</button>
 </div>
+<button (click)="changeOctave(2)">Higher Octave</button>
+<button (click)="changeOctave(0.5)">Lower Octave</button>

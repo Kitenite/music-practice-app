@@ -64,4 +64,8 @@ export class DroneComponent implements OnInit {
     this.activeNote = note;
     this.droneAudioService.playNote(note.frequency)
   }
+
+  changeOctave(multiplier:number){
+    this.droneAudioService.changeOctave(multiplier)
+  }
 }
