@@ -24,7 +24,7 @@ button.active{
     width: calc(100% / 3);
     line-height:25%;
     height: calc(100% / 4);
-    font-size: 2.5rem;
+    font-size: 3rem;
 }
 .octave-button-container {
     width:100%;
@@ -36,5 +36,11 @@ button.active{
     width: calc(100% / 2);
     line-height:25%;
     height: calc(100%);
-    font-size: 2rem;
+    font-size: 3vw;
 }
+
+@media screen and (max-width: 600px) {
+    .octave-button {
+        font-size: 5vw;
+    }
+  }
