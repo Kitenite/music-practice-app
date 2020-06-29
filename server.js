@@ -16,14 +16,22 @@ var tempo = 120
 var rate = 60000/tempo
 DELAY_INTERVALS = 1;
 
+PORT = process.env.PORT || 3000;
+
 // Serve only the static files form the dist directory
 app.use(express.static(__dirname + '/dist/practice-app'));
 app.get('/*', function(req,res) {
 res.sendFile(path.join(__dirname+'/dist/practice-app/index.html'));
 });
 // Start the app by listening on the default Heroku port
-app.listen(process.env.PORT || 8080);
+// Start server
 
+var server = app.listen(PORT, function () {
+    var host = server.address().address;
+    var port = server.address().port;
+    console.log(`Listening at http://localhost:${PORT}`);
+ });
+ 
 // Handle sockets
 var io = require('socket.io').listen(server);
 io.on('connection', function (socket) {
