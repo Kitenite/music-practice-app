@@ -9,7 +9,7 @@ import { AudioContextModule } from 'angular-audio-context';
 import { MetronomeRoutingModule } from './metronome-routing.module';
 import { MetronomeComponent } from './components/metronome.component';
 
-const socketConfig: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const socketConfig: SocketIoConfig = { url: 'https://kallis-practice.herokuapp.com', options: {} };
 
 @NgModule({
   declarations: [MetronomeComponent],
