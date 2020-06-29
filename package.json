@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node server.j",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build — aot — prod"
+    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
@@ -23,7 +23,9 @@
     "@angular/platform-browser-dynamic": "~10.0.1",
     "@angular/router": "~10.0.1",
     "angular-audio-context": "^28.0.22",
+    "express": "^4.17.1",
     "ngx-socket-io": "^3.2.0",
+    "path": "^0.12.7",
     "rxjs": "~6.5.4",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
