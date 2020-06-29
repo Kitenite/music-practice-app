@@ -15,6 +15,11 @@ export class DroneComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngOnDestroy(): void{
+    this.droneAudioService.stopNote()
+    this.activeNote = null;
+  }
+
   notes:MusicalNote[] = [
     {
       name: 'C',
