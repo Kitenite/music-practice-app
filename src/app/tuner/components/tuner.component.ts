@@ -16,12 +16,12 @@ export class TunerComponent {
   //Will use this flag for toggeling recording
   recording = false;
   //URL of Blob
-  url;
+  blobUrl;
   error;
   constructor(private domSanitizer: DomSanitizer) {}
-  
-  sanitize(url: string) {
-    return this.domSanitizer.bypassSecurityTrustUrl(url);
+
+  sanitize(blobUrl: string) {
+    return this.domSanitizer.bypassSecurityTrustUrl(blobUrl);
   }
   /**
   * Start recording.
@@ -60,9 +60,9 @@ export class TunerComponent {
   * @param  {any} blob Blog
   */
   processRecording(blob) {
-    this.url = URL.createObjectURL(blob);
+    this.blobUrl = URL.createObjectURL(blob);
     console.log("blob", blob);
-    console.log("url", this.url);
+    console.log("blobUrl", this.blobUrl);
   }
   /**
   * Process Error.
