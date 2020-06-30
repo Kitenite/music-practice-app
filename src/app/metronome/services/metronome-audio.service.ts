@@ -7,7 +7,7 @@ import { AudioContext } from 'angular-audio-context';
 
 export class MetronomeAudioService{
 
-  constructor(private _audioContext: AudioContext) {}
+  constructor(private audioContext: AudioContext) {}
 
   unlocked:boolean = false;
   isPlaying:boolean = false;
@@ -60,8 +60,8 @@ export class MetronomeAudioService{
           return; // we're not playing non-quarter 8th notes
 
       // create an oscillator
-      let osc = this._audioContext.createOscillator();
-      osc.connect( this._audioContext.destination );
+      let osc = this.audioContext.createOscillator();
+      osc.connect( this.audioContext.destination );
       // if (beatNumber % 16 === 0)    // beat 0 == high pitch
       //     osc.frequency.value = 880.0;
       if (beatNumber % 4 === 0 )    // quarter notes = medium pitch
@@ -76,7 +76,7 @@ export class MetronomeAudioService{
   scheduler() {
       // while there are notes that will need to play before the next interval,
       // schedule them and advance the pointer.
-      while (this.nextNoteTime < this._audioContext.currentTime + this.scheduleAheadTime ) {
+      while (this.nextNoteTime < this.audioContext.currentTime + this.scheduleAheadTime ) {
           this.scheduleNote( this.current16thNote, this.nextNoteTime );
           this.nextNote();
       }
@@ -85,8 +85,8 @@ export class MetronomeAudioService{
   play() {
     if (!this.unlocked) {
       // play silent buffer to unlock the audio
-      let buffer = this._audioContext.createBuffer(1, 1, 22050);
-      let node = this._audioContext.createBufferSource();
+      let buffer = this.audioContext.createBuffer(1, 1, 22050);
+      let node = this.audioContext.createBufferSource();
       node.buffer = buffer;
       node.start(0);
       this.unlocked = true;
@@ -96,7 +96,7 @@ export class MetronomeAudioService{
 
     if (this.isPlaying) { // start playing
         this.current16thNote = 0;
-        this.nextNoteTime = this._audioContext.currentTime;
+        this.nextNoteTime = this.audioContext.currentTime;
         this.timerWorker.postMessage("start");
         return false;
     } else {

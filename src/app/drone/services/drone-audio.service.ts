@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AudioContext } from 'angular-audio-context';
-import { min } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DroneAudioService {
 
-  constructor(private _audioContext: AudioContext) { }
+  constructor(private audioContext: AudioContext) { }
   lastFreq:number
   lastOsc:any;
   octave:number = 1;
@@ -25,11 +24,11 @@ export class DroneAudioService {
   playNote(freq:number=this.lastFreq){
     this.lastFreq = freq;
     this.stopNote();
-    let osc = this._audioContext.createOscillator();
+    let osc = this.audioContext.createOscillator();
     this.lastOsc = osc;
-    osc.connect(this._audioContext.destination);
+    osc.connect(this.audioContext.destination);
     osc.frequency.value = freq*this.octave;
-    osc.start(this._audioContext.currentTime);
+    osc.start(this.audioContext.currentTime);
   }
 
   changeOctave(multiplier:number){

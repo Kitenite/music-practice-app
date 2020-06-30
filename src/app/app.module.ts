@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 // Custom modules
 import { AppRoutingModule } from './app-routing.module';
 import { MetronomeModule } from './metronome/metronome.module';
+import { TunerModule } from './tuner/tuner.module';
 
 
 @NgModule({
@@ -19,6 +20,7 @@ import { MetronomeModule } from './metronome/metronome.module';
     BrowserModule,
     AppRoutingModule,
     MetronomeModule,
+    TunerModule,
     BrowserAnimationsModule,
     MatTabsModule
   ],
