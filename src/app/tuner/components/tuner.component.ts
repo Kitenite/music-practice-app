@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-declare var $: any;
+import { Component } from '@angular/core';
 import * as RecordRTC from 'recordrtc';
 import { DomSanitizer } from '@angular/platform-browser';
 
