@@ -33,34 +33,7 @@ $main-white:white;
   }
   
   /* buttons */
-  
-  button {
-    background-color: $main-blue;
-    border-radius: 28px;
-    border: 0px solid #29668f;
-    display: inline-block;
-    cursor: pointer;
-    color: #ffffff;
-    font-family: Arial;
-    font-size: 17px;
-    padding: 12px 31px;
-    text-decoration: none;
-  
-    &:hover {
-      background-color: $alt-blue;
-    }
-  
-    &:active {
-      position: relative;
-      top: 1px;
-    }
-  
-    &:focus {
-      outline: none;
-      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    }
-  }
-  
+
   input[type=range] {
     -webkit-appearance: none;
     margin: 10px 0;
@@ -313,12 +286,21 @@ $main-white:white;
   #play-button {
     width: 5rem;
     height: 5rem;
+    box-shadow: none;
+    background-color: $main-blue;
+    #play-icon {
+      font-size: 3rem;
+    }
   }
   
   #tempo-change-button {
-    width: 3rem;
-    height: 3rem;
-    margin: 2rem;
+    width: 5rem;
+    height: 5rem;
+    margin: 1rem;
+    #tempo-icon {
+      color: $main-grey;
+      font-size: 4.5rem;
+    }
   }
 
   #tempo-update-button {  

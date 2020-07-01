@@ -1,7 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconRegistry } from '@angular/material/icon';
 
 // Custom components
 import { AppComponent } from './app.component';
@@ -29,4 +30,8 @@ import { TunerModule } from './tuner/tuner.module';
   bootstrap: [AppComponent],
   
 })
-export class AppModule { }
+export class AppModule {
+  constructor(iconRegistry: MatIconRegistry) {
+    iconRegistry.setDefaultFontSetClass('material-icons-round');
+  }
+ }

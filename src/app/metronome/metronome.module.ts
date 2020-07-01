@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 // External libraries
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
@@ -17,7 +19,9 @@ const socketConfig: SocketIoConfig = { url: 'https://kallis-practice.herokuapp.c
     CommonModule,
     MetronomeRoutingModule,
     SocketIoModule.forRoot(socketConfig),
-    AudioContextModule.forRoot('balanced')
+    AudioContextModule.forRoot('balanced'),
+    MatButtonModule,
+    MatIconModule
   ]
 })
 export class MetronomeModule { }

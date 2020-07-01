@@ -32,9 +32,17 @@
 
     <!-- Media buttons -->
     <div id="media-buttons">
-        <img id="tempo-change-button" src="/assets/images/minus.png" (click)="this.playerState.tempo=this.playerState.tempo-1" type="button"/>
-        <img id="play-button" [src]="playerState.state == 2 ? '/assets/images/play.png' : '/assets/images/pause.png'" (click)="emitPlay();" type="button"/>
-        <img id="tempo-change-button" src="/assets/images/plus.png" (click)="this.playerState.tempo=this.playerState.tempo-1+2" type="button"/>
+        <!-- <img id="tempo-change-button" src="/assets/images/minus.png" (click)="this.playerState.tempo=this.playerState.tempo-1" type="button"/> -->
+        <button mat-icon-button id="tempo-change-button" (click)="this.playerState.tempo=this.playerState.tempo-1" aria-label="Decrease tempo">
+            <mat-icon id="tempo-icon" inline="true">remove</mat-icon>
+        </button>
+        <!-- <img id="play-button" [src]="playerState.state == 2 ? '/assets/images/play.png' : '/assets/images/pause.png'" (click)="emitPlay();" type="button"/> -->
+        <button mat-fab (click)="emitPlay();" id="play-button" aria-label="Play metronome">
+            <mat-icon id="play-icon" inline="true" >{{playerState.state == 2 ? "play_arrow" : "pause"}}</mat-icon>
+        </button>
+        <button mat-icon-button id="tempo-change-button" (click)="this.playerState.tempo=this.playerState.tempo-1+2" aria-label="Increase tempo">
+            <mat-icon id="tempo-icon" inline="true" >add</mat-icon>
+        </button>
     </div>
 
 </div> 
