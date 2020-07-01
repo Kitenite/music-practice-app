@@ -42,7 +42,6 @@ export class MetronomeComponent implements OnInit {
   }
 
   nextBeatReceived(data:NextBeat){
-    console.log(data)
     this.playerState.tempo = this.metronomeAudio.tempo = data.tempo
     if (this.playerState.state == PlayerState.Paused){
       return;
@@ -94,12 +93,10 @@ export class MetronomeComponent implements OnInit {
   }
 
   sendTempo(){
-    console.log("sendTempo")
     this.timeSyncService.requestNewTempo(this.playerState.tempo)
   }
 
   toggleResolution(){
-    console.log("toggle resolution")
     this.metronomeAudio.toggleResolution();
   }
 

@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MetronomeModule } from './metronome/metronome.module';
 import { TunerModule } from './tuner/tuner.module';
+import { TimerModule } from './timer/timer.module';
+
 
 
 @NgModule({
@@ -23,7 +25,8 @@ import { TunerModule } from './tuner/tuner.module';
     MetronomeModule,
     TunerModule,
     BrowserAnimationsModule,
-    MatTabsModule
+    MatTabsModule,
+    TimerModule
   ],
   exports: [],
   providers: [],

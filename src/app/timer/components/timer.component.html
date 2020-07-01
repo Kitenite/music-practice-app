@@ -1,0 +1,5 @@
+<div id="timer-container">
+    <div id="time-text-container">{{ this.timerService.viewableTime }}</div>
+    <button mat-flat-button color="primary" (click)="this.timerService.toggleTimer()">{{ this.timerService.isPlaying ? "Pause" : "Play" }}</button>
+    <button mat-flat-button [disabled]="this.timerService.currentTime==0" (click)="this.timerService.resetTimer()">Reset</button>
+</div>

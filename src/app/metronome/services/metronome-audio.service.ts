@@ -117,9 +117,6 @@ export class MetronomeAudioService{
       if (data == "tick") {
         this.scheduler();
       }
-      else{
-        console.log("message: " + data);
-      }
     };
     this.timerWorker.postMessage({"interval":this.lookahead});
   }

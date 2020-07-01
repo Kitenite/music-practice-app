@@ -1,0 +1,18 @@
+#timer-container{
+    float:right;
+    display: inline-flex;
+    vertical-align: middle;
+    color: rgb(107, 107, 107);
+    font-size: large;
+}
+
+#time-text-container {
+    padding-right: 10px;
+    height:3rem;    
+    line-height: 3rem;
+}
+
+button{
+    margin:auto;
+    height:2rem;
+}
