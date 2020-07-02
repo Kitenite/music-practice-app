@@ -1,6 +1,6 @@
 <div id="header-container">
-    <button id="menu-button" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-        <mat-icon>keyboard_arrow_down</mat-icon>
+    <button id="menu-button" mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" aria-label="Example icon-button with a menu">
+        <mat-icon>{{ menuTrigger.menuOpen ? "keyboard_arrow_up" : "keyboard_arrow_down" }}</mat-icon>
         Hello Kalli
     </button>
     <mat-menu #menu="matMenu">
