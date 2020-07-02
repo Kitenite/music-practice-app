@@ -302,8 +302,8 @@ input[type=range] {
 
 /* Mobile */
 @media screen and (max-width: 600px) {
-  #sync {
-    width: 90%;
+  #sync-container {
+    width: 90vw;
     height: 7vh;
   }
 
