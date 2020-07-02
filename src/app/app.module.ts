@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MetronomeModule } from './metronome/metronome.module';
 import { TunerModule } from './tuner/tuner.module';
-import { TimerModule } from './timer/timer.module';
+import { HeaderModule } from './header/header.module';
 
 
 
@@ -26,7 +26,7 @@ import { TimerModule } from './timer/timer.module';
     TunerModule,
     BrowserAnimationsModule,
     MatTabsModule,
-    TimerModule
+    HeaderModule
   ],
   exports: [],
   providers: [],

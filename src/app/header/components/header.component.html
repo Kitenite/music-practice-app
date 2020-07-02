@@ -1,0 +1,22 @@
+<div id="header-container">
+    <button id="menu-button" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>keyboard_arrow_down</mat-icon>
+        Hello Kalli
+    </button>
+    <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+        <mat-icon>music_note</mat-icon>
+        <span>Practice</span>
+    </button>
+    <button mat-menu-item disabled>
+        <mat-icon>calendar_today</mat-icon>
+        <span>Calendar</span>
+    </button>
+    <button mat-menu-item disabled>
+        <mat-icon>account_circle</mat-icon>
+        <span>Account</span>
+    </button>
+    </mat-menu>
+
+    <app-timer></app-timer>
+</div>
