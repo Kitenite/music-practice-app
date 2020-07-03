@@ -1,7 +1,10 @@
 <div >
-  <button (click)="initiateRecording()" class="btn btn-primary" *ngIf="!recording" > Start Recording </button>
-  <button (click)="stopRecording()" class="btn btn-danger" *ngIf="recording"> Stop Recording </button>
-  <audio controls="" *ngIf="blobUrl">
-  <source [src]="sanitize(blobUrl)" type="audio/wav">
-  </audio>
+    <button (click)="initiateRecording()" class="btn btn-primary" *ngIf="!recording" > Start Recording </button>
+    <button (click)="stopRecording()" class="btn btn-danger" *ngIf="recording"> Stop Recording </button>
+    <audio controls="" *ngIf="blobUrl">
+      <source [src]="sanitize(blobUrl)" type="audio/wav">
+    </audio>
+    <canvas #canvas width="600" height="300"></canvas>
+    <p>{{ pitch }}</p>
+    <p>{{ note }}</p>
 </div>
