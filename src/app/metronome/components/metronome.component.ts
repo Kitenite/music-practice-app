@@ -27,7 +27,6 @@ export class MetronomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.metronomeAudio.init();
     this.timeSyncService.subscribeNextBeat().pipe(takeUntil(this.ngUnsubscribe)).subscribe(nextBeat => this.nextBeatReceived(nextBeat));
     this.timeSyncService.subscribeClientCount().pipe(takeUntil(this.ngUnsubscribe)).subscribe(clientCount => this.clientCount = clientCount.count)
   }

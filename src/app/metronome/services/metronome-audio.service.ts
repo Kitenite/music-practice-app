@@ -7,7 +7,9 @@ import { AudioContext } from 'angular-audio-context';
 
 export class MetronomeAudioService{
 
-  constructor(private audioContext: AudioContext) {}
+  constructor(private audioContext: AudioContext) {
+    this.init()
+  }
 
   unlocked:boolean = false;
   isPlaying:boolean = false;

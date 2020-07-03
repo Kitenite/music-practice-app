@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import * as RecordRTC from 'recordrtc';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AudioContext } from 'angular-audio-context';
 
 @Component({
   selector: 'app-tuner',
@@ -8,14 +9,17 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./tuner.component.scss']
 })
 export class TunerComponent {
-
+  analyzer:any;
   title:string = 'micRecorder';
   record:any;
   recording:boolean = false;
   blobUrl:string;
   error:any;
 
-  constructor(private domSanitizer: DomSanitizer) {}
+  constructor(
+    private domSanitizer: DomSanitizer,
+    private audioContext: AudioContext
+    ) {}
 
   sanitize(blobUrl: string) {
     return this.domSanitizer.bypassSecurityTrustUrl(blobUrl);
@@ -29,7 +33,7 @@ export class TunerComponent {
     navigator.mediaDevices.getUserMedia(mediaConstraints).then(this.successCallback.bind(this), this.errorCallback.bind(this));
   }
  
-  successCallback(stream) {
+  successCallback(stream:MediaStream) {
     var options = {
       mimeType: "audio/wav",
       numberOfAudioChannels: 1,
@@ -40,7 +44,14 @@ export class TunerComponent {
     this.record = new StereoAudioRecorder(stream, options);
     this.record.record();
     this.recording = true;
+    this.analyzeStream(stream);
     console.log("recording")
+  }
+
+  analyzeStream(stream:MediaStream){
+    let source = this.audioContext.createMediaStreamSource(stream)
+    this.analyzer = this.audioContext.createAnalyser();
+    source.connect(this.analyzer);
   }
 
   stopRecording() {
