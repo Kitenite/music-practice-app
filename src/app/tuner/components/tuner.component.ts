@@ -9,7 +9,11 @@ import { AudioContext } from 'angular-audio-context';
   styleUrls: ['./tuner.component.scss']
 })
 export class TunerComponent {
+
   analyzer:any;
+  frequencyData;
+  recordInterval;
+
   title:string = 'micRecorder';
   record:any;
   recording:boolean = false;
@@ -26,6 +30,7 @@ export class TunerComponent {
   }
 
   initiateRecording() {
+    this.audioContext.resume()
     let mediaConstraints = {
       video: false,
       audio: true
@@ -41,20 +46,30 @@ export class TunerComponent {
     };
     //Start Actuall Recording
     var StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
+    
     this.record = new StereoAudioRecorder(stream, options);
     this.record.record();
-    this.recording = true;
     this.analyzeStream(stream);
+    this.recording = true;
     console.log("recording")
+    this.recordInterval = setInterval(()=>{
+      this.analyzer.getByteFrequencyData(this.frequencyData);
+      console.log(this.frequencyData)
+    }, 1000);
   }
 
   analyzeStream(stream:MediaStream){
     let source = this.audioContext.createMediaStreamSource(stream)
     this.analyzer = this.audioContext.createAnalyser();
+    this.analyzer.fftSize = 64;
     source.connect(this.analyzer);
+    this.frequencyData = new Uint8Array(this.analyzer.frequencyBinCount);
   }
 
+  
+
   stopRecording() {
+    clearInterval(this.recordInterval);
     this.record.stop(this.processRecording.bind(this));
     this.recording = false;
   }
