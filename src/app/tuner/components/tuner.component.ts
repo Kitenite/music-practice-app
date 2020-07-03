@@ -132,6 +132,8 @@ export class TunerComponent implements OnInit {
 
   getPitch(ac){
     if (ac == -1) {
+      this.pitch = 0;
+      this.note = "--";
       // detectorElem.className = "vague";
       // pitchElem.innerText = "--";
       // noteElem.innerText = "-";
