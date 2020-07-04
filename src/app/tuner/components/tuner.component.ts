@@ -17,8 +17,10 @@ export class TunerComponent implements OnInit {
   analyzer:any;
   frequencyData;
   animationFrame;
-  pitch = 0;
-  note = "--";
+  pitch:number = 0;
+  detuneInt:number = 0;
+  note:string = "--";
+  detune:string = "--"
 
   // Recorder
   title:string = 'micRecorder';
@@ -147,20 +149,19 @@ export class TunerComponent implements OnInit {
       var noteInt =  this.noteFromPitch(this.pitch);
       this.note = this.noteStrings[noteInt%12]
       console.log("note: ", this.note);
-      var detune = this.centsOffFromPitch( this.pitch, this.note );
-      console.log("detune: ", detune)
-      // if (detune == 0 ) {
-      //   detuneElem.className = "";
-      //   detuneAmount.innerHTML = "--";
-      // } else {
-      //  if (detune < 0){
-      //    detuneElem.className = "flat";
-      //   }
-      //  else{
-      //    detuneElem.className = "sharp";
-      //   }
+      this.detuneInt = this.centsOffFromPitch( this.pitch, noteInt );
+      console.log("detune: ", this.detuneInt)
+      if (this.detuneInt == 0 ) {
+        this.detune = "good";
+      } else {
+        if (this.detuneInt < 0){
+          this.detune = "flat";
+        }
+        else{
+          this.detune = "sharp";
+        }
       //  detuneAmount.innerHTML = Math.abs( detune );
-      // }
+      }
     }  
   }
 
@@ -174,7 +175,7 @@ export class TunerComponent implements OnInit {
   }
   
   centsOffFromPitch( frequency, note ) {
-    return Math.floor( 1200 * Math.log( frequency / this.frequencyFromNoteNumber( note ))/Math.log(2) );
+    return Math.floor( 1200 * Math.log( frequency / this.frequencyFromNoteNumber( note ))/Math.log(2));
   }
 
   autoCorrelate(buf, sampleRate) {

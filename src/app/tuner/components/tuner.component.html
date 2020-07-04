@@ -1,7 +1,8 @@
 <div >
     <h1>Pitch: {{ pitch }}</h1>
     <h1>Note: {{ note }}</h1>
-    
+    <h1>Detune: {{ detune }}</h1>
+    <h1>Off by: {{ detuneInt }}</h1>
     <button (click)="initiateRecording()" class="btn btn-primary" *ngIf="!recording" > Start Recording </button>
     <button (click)="stopRecording()" class="btn btn-danger" *ngIf="recording"> Stop Recording </button>
     <audio controls="" *ngIf="blobUrl">
