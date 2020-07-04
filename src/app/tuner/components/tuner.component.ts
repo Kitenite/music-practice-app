@@ -87,8 +87,9 @@ export class TunerComponent implements OnInit {
   }
 
   errorCallback(error) {
-    this.error = 'Can not play audio in your browser';
+    this.error = "Browser doesn't support recording";
     console.log(this.error)
+    alert(this.error)
   }
 
   // Pitch Detection
