@@ -1,7 +1,5 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import * as RecordRTC from 'recordrtc';
-import { DomSanitizer } from '@angular/platform-browser';
-import { AudioContext } from 'angular-audio-context';
+import { MediaHandlerService } from '../../shared/services/media-handler.service'
 
 @Component({
   selector: 'app-tuner',
@@ -9,46 +7,37 @@ import { AudioContext } from 'angular-audio-context';
   styleUrls: ['./tuner.component.scss']
 })
 export class TunerComponent implements OnInit {
+
+  // Canvas
   @ViewChild('canvas', { static: true })
   canvas: ElementRef<HTMLCanvasElement>;  
   private ctx: CanvasRenderingContext2D;
 
+  // Recording state
+  recording:boolean = false;
+
   // Analyzer
-  analyzer:any;
-  frequencyData;
   animationFrame;
   pitch:number = 0;
   detuneInt:number = 0;
   note:string = "--";
   detune:string = "--"
 
-  // Recorder
-  title:string = 'micRecorder';
-  record:any;
-  recording:boolean = false;
-  blobUrl:string;
-  error:any;
-
   constructor(
-    private domSanitizer: DomSanitizer,
-    private audioContext: AudioContext
+    private mediaHandlerService:MediaHandlerService
   ) {}
 
   ngOnInit(){
     this.ctx = this.canvas.nativeElement.getContext('2d');
   }
 
-  sanitize(blobUrl: string) {
-    return this.domSanitizer.bypassSecurityTrustUrl(blobUrl);
-  }
-
   initiateRecording() {
-    this.audioContext.resume()
+    this.recording = true;
     let mediaConstraints = {
       video: false,
       audio: true
     };
-    navigator.mediaDevices.getUserMedia(mediaConstraints).then(this.successCallback.bind(this), this.errorCallback.bind(this));
+    this.mediaHandlerService.initMedia(mediaConstraints).then(this.successCallback.bind(this), this.errorCallback.bind(this));
   }
  
   successCallback(stream:MediaStream) {
@@ -57,41 +46,19 @@ export class TunerComponent implements OnInit {
       numberOfAudioChannels: 1,
       sampleRate: 44100,
     };
-    //Start Actuall Recording
-    var StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
-    this.record = new StereoAudioRecorder(stream, options);
-    this.record.record();
-    this.recording = true;
-    // Add analyzer
-    this.analyzeStream(stream);
-    console.log("recording")
-
-  }
-
-  analyzeStream(stream:MediaStream){
-    let source = this.audioContext.createMediaStreamSource(stream)
-    this.analyzer = this.audioContext.createAnalyser();
-    source.connect(this.analyzer);
-    this.frequencyData = new Float32Array(this.analyzer.frequencyBinCount);
-    this.updatePitch()
+    this.mediaHandlerService.initAnalyzer(stream)
+    this.updatePitch();
+    
   }
 
   stopRecording() {
     cancelAnimationFrame(this.animationFrame)
-    this.record.stop(this.processRecording.bind(this));
-    this.recording = false;
   }
 
-  processRecording(blob) {
-    this.blobUrl = URL.createObjectURL(blob);
-    // console.log("blob: ", blob);
-    // console.log("blobUrl : ", this.blobUrl);
-  }
 
   errorCallback(error) {
-    this.error = "Browser doesn't support recording";
-    console.log(this.error)
-    alert(this.error)
+    console.log(error)
+    alert(error)
   }
 
   // Pitch Detection
@@ -99,10 +66,11 @@ export class TunerComponent implements OnInit {
 
   updatePitch() {
     var cycles = new Array;
-    this.analyzer.getFloatTimeDomainData(this.frequencyData);
-    var ac = this.autoCorrelate( this.frequencyData, this.audioContext.sampleRate );
+    var freq = this.mediaHandlerService.getUpdatedFrequency();
+    
+    var ac = this.autoCorrelate(freq, this.mediaHandlerService.getSampleRate() );
     console.log(ac)
-    this.drawCanvas(this.frequencyData)
+    this.drawCanvas(freq)
     this.getPitch(ac);
     this.animationFrame = requestAnimationFrame(() => this.updatePitch())
   }
@@ -145,24 +113,21 @@ export class TunerComponent implements OnInit {
     } else {
       // detectorElem.className = "confident";
       this.pitch = Math.round(ac);
-      console.log("pitch: ", this.pitch);
       var noteInt =  this.noteFromPitch(this.pitch);
       this.note = this.noteStrings[noteInt%12]
-      console.log("note: ", this.note);
+
       this.detuneInt = this.centsOffFromPitch( this.pitch, noteInt );
-      console.log("detune: ", this.detuneInt)
+
       if (this.detuneInt == 0 ) {
         this.detune = "good";
       } else {
         if (this.detuneInt < 0){
           this.detune = "flat";
-        }
-        else{
+        } else{
           this.detune = "sharp";
         }
-      //  detuneAmount.innerHTML = Math.abs( detune );
       }
-    }  
+    }
   }
 
   noteFromPitch( frequency ) {
