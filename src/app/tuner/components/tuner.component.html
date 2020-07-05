@@ -1,12 +1,23 @@
-<div >
+<div id="picker-container">
+  <mat-slider
+        [disabled]="false"
+        [max]="maxNote"
+        [min]="minNote"
+        [step]="1"
+        [thumbLabel]="true"
+        [tickInterval]="1"
+        [(ngModel)]="value">
+    </mat-slider>
+</div>
+
+<button (click)="initiateRecording()" *ngIf="!recording" class="btn btn-primary" > Start Recording </button>
+<div id="analysis-container" [hidden]="!recording">
     <div>
       <h1>Pitch: {{ pitch }}</h1>
       <h1>Note: {{ note }}</h1>
       <h1>Detune: {{ detune }}</h1>
       <h1>Off by: {{ detuneInt }}</h1>
     </div>
-
     <canvas #canvas width="600" height="300"></canvas>
 </div>
 
-<button (click)="initiateRecording()" *ngIf="!recording" class="btn btn-primary" > Start Recording </button>

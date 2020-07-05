@@ -16,6 +16,10 @@ export class TunerComponent implements OnInit {
   // Recording state
   recording:boolean = false;
 
+  // Note constants
+  minNote:number = 0;
+  maxNote:number = 1046;
+
   // Analyzer
   animationFrame;
   pitch:number = 0;
