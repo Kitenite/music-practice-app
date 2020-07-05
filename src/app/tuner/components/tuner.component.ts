@@ -82,20 +82,21 @@ export class TunerComponent implements OnInit {
   drawCanvas(buf){
     var waveCanvas = this.ctx;
     waveCanvas.clearRect(0,0,512,256);
-    waveCanvas.strokeStyle = "red";
-    waveCanvas.beginPath();
-    waveCanvas.moveTo(0,0);
-    waveCanvas.lineTo(0,256);
-    waveCanvas.moveTo(128,0);
-    waveCanvas.lineTo(128,256);
-    waveCanvas.moveTo(256,0);
-    waveCanvas.lineTo(256,256);
-    waveCanvas.moveTo(384,0);
-    waveCanvas.lineTo(384,256);
-    waveCanvas.moveTo(512,0);
-    waveCanvas.lineTo(512,256);
-    waveCanvas.stroke();
-    waveCanvas.strokeStyle = "black";
+    // waveCanvas.strokeStyle = "red";
+    // waveCanvas.beginPath();
+    // waveCanvas.moveTo(0,0);
+    // waveCanvas.lineTo(0,256);
+    // waveCanvas.moveTo(128,0);
+    // waveCanvas.lineTo(128,256);
+    // waveCanvas.moveTo(256,0);
+    // waveCanvas.lineTo(256,256);
+    // waveCanvas.moveTo(384,0);
+    // waveCanvas.lineTo(384,256);
+    // waveCanvas.moveTo(512,0);
+    // waveCanvas.lineTo(512,256);
+    // waveCanvas.stroke();
+    waveCanvas.strokeStyle = "darkgrey";
+    waveCanvas.lineWidth = 5;
     waveCanvas.beginPath();
     waveCanvas.moveTo(0,buf[0]);
     for (var i=1;i<512;i++) {
