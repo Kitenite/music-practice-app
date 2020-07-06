@@ -7,7 +7,9 @@ import { TunerComponent } from './components/tuner.component';
 
 
 @NgModule({
-  declarations: [TunerComponent],
+  declarations: [
+    TunerComponent
+  ],
   imports: [
     CommonModule,
     TunerRoutingModule,

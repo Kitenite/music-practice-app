@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { MediaHandlerService } from '../../shared/services/media-handler.service'
+import { AudioAnalyzerService } from '../services/audio-analyzer.service';
 
 @Component({
   selector: 'app-tuner',
@@ -28,7 +29,8 @@ export class TunerComponent implements OnInit {
   detune:string = "--"
 
   constructor(
-    private mediaHandlerService:MediaHandlerService
+    private mediaHandlerService:MediaHandlerService,
+    private audioAnalyzerService:AudioAnalyzerService
   ) {}
 
   ngOnInit(){
@@ -36,7 +38,6 @@ export class TunerComponent implements OnInit {
   }
 
   initiateRecording() {
-    this.recording = true;
     let mediaConstraints = {
       video: false,
       audio: true
@@ -52,7 +53,7 @@ export class TunerComponent implements OnInit {
     };
     this.mediaHandlerService.initAnalyzer(stream)
     this.updatePitch();
-    
+    this.recording = true;
   }
 
   stopRecording() {
@@ -72,8 +73,7 @@ export class TunerComponent implements OnInit {
     var cycles = new Array;
     var freq = this.mediaHandlerService.getUpdatedFrequency();
     
-    var ac = this.autoCorrelate(freq, this.mediaHandlerService.getSampleRate() );
-    console.log(ac)
+    var ac = this.audioAnalyzerService.autoCorrelate(freq, this.mediaHandlerService.getSampleRate() );
     this.drawCanvas(freq)
     this.getPitch(ac);
     this.animationFrame = requestAnimationFrame(() => this.updatePitch())
@@ -82,20 +82,7 @@ export class TunerComponent implements OnInit {
   drawCanvas(buf){
     var waveCanvas = this.ctx;
     waveCanvas.clearRect(0,0,512,256);
-    // waveCanvas.strokeStyle = "red";
-    // waveCanvas.beginPath();
-    // waveCanvas.moveTo(0,0);
-    // waveCanvas.lineTo(0,256);
-    // waveCanvas.moveTo(128,0);
-    // waveCanvas.lineTo(128,256);
-    // waveCanvas.moveTo(256,0);
-    // waveCanvas.lineTo(256,256);
-    // waveCanvas.moveTo(384,0);
-    // waveCanvas.lineTo(384,256);
-    // waveCanvas.moveTo(512,0);
-    // waveCanvas.lineTo(512,256);
-    // waveCanvas.stroke();
-    waveCanvas.strokeStyle = "darkgrey";
+    waveCanvas.strokeStyle = "grey";
     waveCanvas.lineWidth = 5;
     waveCanvas.beginPath();
     waveCanvas.moveTo(0,buf[0]);
@@ -103,7 +90,6 @@ export class TunerComponent implements OnInit {
       waveCanvas.lineTo(i,128+(buf[i]*128));
     }
     waveCanvas.stroke();
-    
   }
 
   getPitch(ac){
@@ -118,10 +104,10 @@ export class TunerComponent implements OnInit {
     } else {
       // detectorElem.className = "confident";
       this.pitch = Math.round(ac);
-      var noteInt =  this.noteFromPitch(this.pitch);
+      var noteInt =  this.audioAnalyzerService.noteFromPitch(this.pitch);
       this.note = this.noteStrings[noteInt%12]
 
-      this.detuneInt = this.centsOffFromPitch( this.pitch, noteInt );
+      this.detuneInt = this.audioAnalyzerService.centsOffFromPitch( this.pitch, noteInt );
 
       if (this.detuneInt == 0 ) {
         this.detune = "good";
@@ -134,79 +120,4 @@ export class TunerComponent implements OnInit {
       }
     }
   }
-
-  noteFromPitch( frequency ) {
-    var noteNum = 12 * (Math.log( frequency / 440 )/Math.log(2) );
-    return Math.round( noteNum ) + 69;
-  }
-  
-  frequencyFromNoteNumber( note ) {
-    return 440 * Math.pow(2,(note-69)/12);
-  }
-  
-  centsOffFromPitch( frequency, note ) {
-    return Math.floor( 1200 * Math.log( frequency / this.frequencyFromNoteNumber( note ))/Math.log(2));
-  }
-
-  autoCorrelate(buf, sampleRate) {
-    const SIZE = buf.length;
-    const MAX_SAMPLES = Math.floor(SIZE/2);
-    const MIN_SAMPLES = 0;
-    const GOOD_ENOUGH_CORRELATION = 0.9;
-
-    var best_offset = -1;
-    var best_correlation = 0;
-    var rms = 0;
-    var foundGoodCorrelation = false;
-    var correlations = new Array(MAX_SAMPLES);
-  
-    for (var i=0;i<SIZE;i++) {
-      var val = buf[i];
-      rms += val*val;
-    }
-    rms = Math.sqrt(rms/SIZE);
-    if (rms<0.01){
-      // console.log("Not enough signal")
-      return -1;
-    }
-
-    var lastCorrelation=1;
-    for (var offset = MIN_SAMPLES; offset < MAX_SAMPLES; offset++) {
-      var correlation = 0;
-  
-      for (var i=0; i<MAX_SAMPLES; i++) {
-        correlation += Math.abs((buf[i])-(buf[i+offset]));
-      }
-      correlation = 1 - (correlation/MAX_SAMPLES);
-      correlations[offset] = correlation; // store it, for the tweaking we need to do below.
-      if ((correlation>GOOD_ENOUGH_CORRELATION) && (correlation > lastCorrelation)) {
-        foundGoodCorrelation = true;
-        if (correlation > best_correlation) {
-          best_correlation = correlation;
-          best_offset = offset;
-        }
-      } else if (foundGoodCorrelation) {
-        // short-circuit - we found a good correlation, then a bad one, so we'd just be seeing copies from here.
-        // Now we need to tweak the offset - by interpolating between the values to the left and right of the
-        // best offset, and shifting it a bit.  This is complex, and HACKY in this code (happy to take PRs!) -
-        // we need to do a curve fit on correlations[] around best_offset in order to better determine precise
-        // (anti-aliased) offset.
-  
-        // we know best_offset >=1, 
-        // since foundGoodCorrelation cannot go to true until the second pass (offset=1), and 
-        // we can't drop into this clause until the following pass (else if).
-        var shift = (correlations[best_offset+1] - correlations[best_offset-1])/correlations[best_offset];  
-        return sampleRate/(best_offset+(8*shift));
-      }
-      lastCorrelation = correlation;
-    }
-    if (best_correlation > 0.01) {
-      // console.log("f = " + sampleRate/best_offset + "Hz (rms: " + rms + " confidence: " + best_correlation + ")")
-      return sampleRate/best_offset;
-    }
-    return -1;
-  //	var best_frequency = sampleRate/best_offset;
-  }
-
-
 }
