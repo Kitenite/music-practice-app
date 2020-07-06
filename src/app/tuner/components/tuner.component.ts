@@ -1,6 +1,8 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { MediaHandlerService } from '../../shared/services/media-handler.service'
 import { AudioAnalyzerService } from '../services/audio-analyzer.service';
+import * as musicalNotes from '../../../assets/musicalNotes.json'
+import { MusicalNote } from '../../shared/models/musical-notes'
 
 @Component({
   selector: 'app-tuner',
@@ -20,9 +22,12 @@ export class TunerComponent implements OnInit {
   // Note constants
   minNote:number = 0;
   maxNote:number = 1046;
+  acceptableDetune:number  = 5;
+
+  picking:boolean = false;
 
   // Analyzer
-  noteStrings = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+  notes:[MusicalNote] =  (musicalNotes as any).default;
   targetHertz = 440;
   targetNoteIndex = 0;
   animationFrame;
@@ -71,9 +76,7 @@ export class TunerComponent implements OnInit {
 
 
   updatePitch() {
-    var cycles = new Array;
     var freq = this.mediaHandlerService.getUpdatedFrequency();
-    
     var ac = this.audioAnalyzerService.autoCorrelate(freq, this.mediaHandlerService.getSampleRate() );
     this.drawCanvas(freq)
     this.getPitch(ac);
@@ -81,36 +84,34 @@ export class TunerComponent implements OnInit {
   }
 
   drawCanvas(buf){
+    var width:number = window.innerWidth;
+    const height:number= window.innerHeight/4;
     var waveCanvas = this.ctx;
-    waveCanvas.clearRect(0,0,512,256);
+    waveCanvas.canvas.width  = width;
+    waveCanvas.canvas.height = height;
+    waveCanvas.clearRect(0,0,width,height);
     waveCanvas.strokeStyle = "grey";
     waveCanvas.lineWidth = 5;
     waveCanvas.beginPath();
     waveCanvas.moveTo(0,buf[0]);
-    for (var i=1;i<512;i++) {
-      waveCanvas.lineTo(i,128+(buf[i]*128));
+    for (var i=1;i<width;i++) {
+      waveCanvas.lineTo(i,(height/2)+(buf[i]*(height/2)));
     }
     waveCanvas.stroke();
   }
 
   getPitch(ac){
     if (ac == -1) {
-      this.pitch = 0;
-      this.note = "--";
-      // detectorElem.className = "vague";
-      // pitchElem.innerText = "--";
-      // noteElem.innerText = "-";
-      // detuneElem.className = "";
-      // detuneAmount.innerText = "--";
+      // Reset if wanted
+      // this.pitch = 0;
+      // this.note = "--";
     } else {
-      // detectorElem.className = "confident";
       this.pitch = Math.round(ac);
       var noteInt =  this.audioAnalyzerService.noteFromPitch(this.pitch);
-      this.note = this.noteStrings[noteInt%12]
-
+      this.note = this.notes[noteInt%12].name
       this.detuneInt = this.audioAnalyzerService.centsOffFromPitch( this.pitch, noteInt );
 
-      if (this.detuneInt == 0 ) {
+      if (Math.abs(this.detuneInt) < this.acceptableDetune) {
         this.detune = "good";
       } else {
         if (this.detuneInt < 0){

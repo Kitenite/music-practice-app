@@ -1,16 +1,31 @@
 .btn{
+    align-self: center;
     background-color: #6E6A6A;
     color:white;
     border-radius: 1.5rem;
 }
 
-#picker-container{
-    height:40vh;
-    background: yellow;
+canvas{
+    top: 40vh;
+    left: 0;
+    position: absolute;
+    z-index: -100;
 }
 
 #analysis-container{
+    display: flex;
     height:40vh;
-    background: red;
+    justify-content: center;
+    #result-container{
+        text-align: center;
+    }
 }
+
+#picker-container{
+    display: flex;
+    justify-content: center;
+    height:40vh;
+}
+
+
 

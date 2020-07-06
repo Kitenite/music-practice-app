@@ -1,33 +1,33 @@
-<div id="picker-container">
-  <p>{{ targetHertz }}</p>
-  <mat-slider
-        [max]="maxNote"
-        [min]="minNote"
-        [step]="1"
-        [thumbLabel]="true"
-        [tickInterval]="1">
-  </mat-slider>
-
-  <mat-form-field appearance="fill">
-    <mat-label>Choose note</mat-label>
-    <mat-select [(value)]="noteStrings[targetNoteIndex]">
-      <mat-option [value]="noteStrings[targetNoteIndex]" *ngFor="let note of noteStrings">{{ note }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  
-</div>
-
-
 <div id="analysis-container">
-  <button mat-flat-button (click)="initiateRecording()" *ngIf="!recording" class="btn btn-primary" > Start Recording </button>
+  <button mat-flat-button (click)="initiateRecording()" *ngIf="!recording" class="btn btn-primary" > Start Tuning </button>
   <div id="result-container" [hidden]="!recording">
-    <canvas #canvas width="600" height="300"></canvas>
     <div>
-      <h1>Pitch: {{ pitch }}</h1>
-      <h1>Note: {{ note }}</h1>
-      <h1>Detune: {{ detune }}</h1>
-      <h1>Off by: {{ detuneInt }}</h1>
+      <h1>{{ pitch }} Hz</h1>
+      <h1>{{ note }}</h1>
+      <h1>{{ detune }}: {{ detuneInt }}</h1>
     </div>
   </div>
+</div>
+<canvas #canvas width="600"></canvas>
+<div id="picker-container">
+  <mat-slider #slider *ngIf="picking"
+      (input)="targetHertz = $event.value"
+      [value]="targetHertz"
+      [max]="maxNote"
+      [min]="minNote"
+      [step]="1"
+      [thumbLabel]="true"
+      [tickInterval]="1">
+  </mat-slider>
+  <p>{{ picking ? "Choose new target:" : "Target: "+targetHertz+"Hz"}}</p>
+  <button mat-flat-button class="btn btn-primary" (click)="picking=!picking" >{{ picking ? "Confirm" : "Pick new"}}</button>
+<!-- 
+  <mat-form-field appearance="fill">
+    <mat-label>Choose note</mat-label>
+    <mat-select [(value)]="notes[targetNoteIndex].name">
+      <mat-option [value]="notes[targetNoteIndex].name" *ngFor="let note of notes">{{ note.name }}</mat-option>
+    </mat-select>
+  </mat-form-field> -->
+  
 </div>
 

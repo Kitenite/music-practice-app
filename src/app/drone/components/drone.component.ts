@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DroneAudioService } from '../services/drone-audio.service'
-import { MusicalNote } from '../models/musical-notes'
+import { MusicalNote } from '../../shared/models/musical-notes'
 import * as musicalNotes from '../../../assets/musicalNotes.json'
 
 @Component({
