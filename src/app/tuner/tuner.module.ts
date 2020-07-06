@@ -1,8 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+// Materials
 import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button'
+import { MatSelectModule } from '@angular/material/select';
 
+// Custom
 import { TunerRoutingModule } from './tuner-routing.module';
 import { TunerComponent } from './components/tuner.component';
 
@@ -15,7 +19,8 @@ import { TunerComponent } from './components/tuner.component';
     CommonModule,
     TunerRoutingModule,
     MatSliderModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSelectModule
   ]
 })
 export class TunerModule { }

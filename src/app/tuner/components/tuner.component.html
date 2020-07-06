@@ -1,11 +1,19 @@
 <div id="picker-container">
+  <p>{{ targetHertz }}</p>
   <mat-slider
         [max]="maxNote"
         [min]="minNote"
         [step]="1"
         [thumbLabel]="true"
         [tickInterval]="1">
-    </mat-slider>
+  </mat-slider>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Choose note</mat-label>
+    <mat-select [(value)]="noteStrings[targetNoteIndex]">
+      <mat-option [value]="noteStrings[targetNoteIndex]" *ngFor="let note of noteStrings">{{ note }}</mat-option>
+    </mat-select>
+  </mat-form-field>
   
 </div>
 

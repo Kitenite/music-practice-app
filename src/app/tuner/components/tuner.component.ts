@@ -22,6 +22,9 @@ export class TunerComponent implements OnInit {
   maxNote:number = 1046;
 
   // Analyzer
+  noteStrings = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+  targetHertz = 440;
+  targetNoteIndex = 0;
   animationFrame;
   pitch:number = 0;
   detuneInt:number = 0;
@@ -66,8 +69,6 @@ export class TunerComponent implements OnInit {
     alert(error)
   }
 
-  // Pitch Detection
-  noteStrings = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
   updatePitch() {
     var cycles = new Array;
