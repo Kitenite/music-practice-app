@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { MediaHandlerService } from '../../shared/services/media-handler.service'
 import { AudioAnalyzerService } from '../services/audio-analyzer.service';
 import * as musicalNotes from '../../../assets/musicalNotes.json'
@@ -9,11 +9,11 @@ import { MusicalNote } from '../../shared/models/musical-notes'
   templateUrl: './tuner.component.html',
   styleUrls: ['./tuner.component.scss']
 })
-export class TunerComponent implements OnInit {
+export class TunerComponent implements OnInit, OnDestroy {
 
   // Canvas
   @ViewChild('canvas', { static: true })
-  canvas: ElementRef<HTMLCanvasElement>;  
+  private canvas: ElementRef<HTMLCanvasElement>;  
   private ctx: CanvasRenderingContext2D;
 
   // Recording state
@@ -43,6 +43,10 @@ export class TunerComponent implements OnInit {
 
   ngOnInit(){
     this.ctx = this.canvas.nativeElement.getContext('2d');
+  }
+
+  ngOnDestroy(){
+    this.mediaHandlerService.stopRecording();
   }
 
   initiateRecording() {

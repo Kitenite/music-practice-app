@@ -5,7 +5,7 @@ import { AudioContext } from 'angular-audio-context';
   providedIn: 'root'
 })
 export class MediaHandlerService {
-
+  private stream;
   constructor(
     private audioContext: AudioContext
   ) { }
@@ -19,6 +19,7 @@ export class MediaHandlerService {
   }
 
   initAnalyzer(stream){
+    this.stream = stream;
     let source = this.audioContext.createMediaStreamSource(stream)
     this.analyzer = this.audioContext.createAnalyser();
     source.connect(this.analyzer);
@@ -32,6 +33,12 @@ export class MediaHandlerService {
   getUpdatedFrequency(){
     this.analyzer.getFloatTimeDomainData(this.frequencyData);
     return this.frequencyData;
+  }
+
+  stopRecording(){
+    this.stream.getTracks().forEach(function(track) {
+      track.stop();
+    });
   }
 
 }

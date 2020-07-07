@@ -1,18 +1,19 @@
+
 .btn{
     align-self: center;
     background-color: #6E6A6A;
     color:white;
     border-radius: 1.5rem;
-}
 
+}
 canvas{
     top: 40vh;
-    left: 0;
-    position: absolute;
-    z-index: -100;
+    z-index: -1;
+    position: fixed;
 }
 
 #analysis-container{
+    position: relative;
     display: flex;
     height:40vh;
     justify-content: center;
@@ -22,9 +23,12 @@ canvas{
 }
 
 #picker-container{
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
     display: flex;
     justify-content: center;
-    height:40vh;
+    height:20vh;
 }
 
 
