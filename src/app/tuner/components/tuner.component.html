@@ -1,31 +1,27 @@
-<div id="main-container">
-  <div id="analysis-container">
-    <button mat-flat-button (click)="initiateRecording()" *ngIf="!recording" class="btn btn-primary" > Start Tuning </button>
-    <div id="result-container" [hidden]="!recording">
-      <h1 id="pitch-display">{{ pitch }} Hz</h1>
-      <h1 id="note-display">{{ note }}</h1>
-      <h1 id="detune-display">{{ detune }}: {{ detuneInt }}</h1>
-    </div>
+<div id="analysis-container">
+  <button mat-flat-button (click)="initiateRecording()" *ngIf="!recording" class="btn btn-primary" > Start Tuning </button>
+  <div id="result-container" [hidden]="!recording">
+    <h1 id="pitch-display">{{ pitch }} Hz</h1>
+    <h1 id="note-display">{{ note }}</h1>
+    <h1 id="detune-display">{{ detune }}: {{ detuneInt>=0 ? "+":"-" }}{{ detuneInt }}</h1>
   </div>
-  <canvas #canvas width="0" height="0"></canvas>
-  <div id="picker-container">
+</div>
+<canvas #canvas width="0" height="0"></canvas>
+<div id="picker-container">
+  <div>
+    <h1>Target:</h1>
+    <h1 id="target-display">{{ targetHertz==0 ? "--" : targetHertz+"Hz" }}</h1>
     <div>
-      <h1>Target:</h1>
-      <h1>{{ targetHertz+"Hz" }}</h1>
-      <div>
-        <mat-slider #slider *ngIf="picking"
-          (input)="targetHertz = $event.value"
-          [value]="targetHertz"
-          [max]="maxNote"
-          [min]="minNote"
-          [step]="1"
-          [thumbLabel]="true"
-          [tickInterval]="1">
-        </mat-slider>
-        <button mat-flat-button *ngIf="recording" class="btn btn-primary" (click)="picking=!picking" >{{ picking ? "Confirm" : "Pick new target"}}</button>
-      </div>
+      <mat-slider #slider *ngIf="picking"
+        (input)="targetHertz = $event.value"
+        [value]="targetHertz"
+        [max]="maxNote"
+        [min]="minNote"
+        [step]="5"
+        [thumbLabel]="true">
+      </mat-slider>
+      <button mat-flat-button *ngIf="recording" class="btn btn-primary" (click)="picking=!picking" >{{ picking ? "Confirm" : "Set a target"}}</button>
     </div>
-    
   </div>
 </div>
 

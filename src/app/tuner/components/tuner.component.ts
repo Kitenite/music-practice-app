@@ -1,3 +1,5 @@
+// Largely adapted from https://github.com/cwilso/PitchDetect
+
 import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { MediaHandlerService } from '../../shared/services/media-handler.service'
 import { AudioAnalyzerService } from '../services/audio-analyzer.service';
@@ -28,7 +30,7 @@ export class TunerComponent implements OnInit, OnDestroy {
 
   // Analyzer
   notes:[MusicalNote] =  (musicalNotes as any).default;
-  targetHertz = 440;
+  targetHertz = 0;
   targetNoteIndex = 0;
   animationFrame;
   pitch:number = 0;
@@ -105,15 +107,15 @@ export class TunerComponent implements OnInit, OnDestroy {
   }
 
   getPitch(ac){
-    if (ac == -1) {
-      // Reset if wanted
-      // this.pitch = 0;
-      // this.note = "--";
-    } else {
+    if (ac != -1) {
       this.pitch = Math.round(ac);
       var noteInt =  this.audioAnalyzerService.noteFromPitch(this.pitch);
       this.note = this.notes[noteInt%12].name
-      this.detuneInt = this.audioAnalyzerService.centsOffFromPitch( this.pitch, noteInt );
+      if (this.targetHertz == 0){
+        this.detuneInt = this.audioAnalyzerService.centsOffFromPitch( this.pitch, noteInt );
+      } else {
+        this.detuneInt = this.pitch - this.targetHertz;
+      }
 
       if (Math.abs(this.detuneInt) < this.acceptableDetune) {
         this.detune = "good";

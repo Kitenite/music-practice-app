@@ -30,7 +30,7 @@ canvas{
     bottom: 0;
     display: flex;
     justify-content: center;
-    height:20vh;
+    height:25vh;
     text-align: center;
 }
 
@@ -50,5 +50,13 @@ canvas{
     line-height: 5rem;
 }
 
+#target-display{
+    font-size: 2rem;
+    line-height: 2rem;
+}
+
+mat-slider{
+    width: 40vw;
+}
 
 
