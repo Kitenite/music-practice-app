@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CountdownTimerComponent } from './countdown-timer.component';
+import { CountdownTimerComponent } from './components/countdown-timer.component';
 
 const routes: Routes = [{ path: '', component: CountdownTimerComponent }];
 
