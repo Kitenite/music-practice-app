@@ -36,9 +36,10 @@ export class MediaHandlerService {
   }
 
   stopRecording(){
-    this.stream.getTracks().forEach(function(track) {
-      track.stop();
-    });
+    if (this.stream) {
+      this.stream.getTracks().forEach(function(track) {
+        track.stop();
+      });
+    }
   }
-
 }
