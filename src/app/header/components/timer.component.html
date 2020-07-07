@@ -1,5 +1,5 @@
 <div id="timer-container">
-    <div id="time-text-container" >{{ this.timerService.currentTime==0 ? "" : this.timerService.viewableTime }}</div>
-    <button mat-flat-button color="primary" (click)="this.timerService.toggleTimer()">{{ this.timerService.currentTime!=0 ? (this.timerService.isPlaying ? "Pause" : "Resume") : "Start Session"}}</button>
-    <button mat-flat-button (click)="this.timerService.resetTimer()" *ngIf="this.timerService.currentTime">Reset</button>
+    <div id="time-text-container" >{{ this.timerService.timeInterval ? this.timerService.viewableTime : ""}}</div>
+    <button mat-flat-button color="primary" (click)="this.timerService.toggleTimer()">{{ this.timerService.timeInterval ? (this.timerService.isPlaying ? "Pause" : "Resume") : "Start Session"}}</button>
+    <button mat-flat-button (click)="this.timerService.resetTimer()" *ngIf="this.timerService.timeInterval">Reset</button>
 </div>
