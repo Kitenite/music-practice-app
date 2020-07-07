@@ -88,8 +88,8 @@ export class TunerComponent implements OnInit, OnDestroy {
   }
 
   drawCanvas(buf){
-    var width:number = window.innerWidth;
-    const height:number= window.innerHeight/4;
+    var width:number = window.innerWidth*0.7;
+    var height:number= window.innerHeight/4;
     var waveCanvas = this.ctx;
     waveCanvas.canvas.width  = width;
     waveCanvas.canvas.height = height;

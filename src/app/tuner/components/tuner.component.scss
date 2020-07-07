@@ -1,21 +1,23 @@
-
+h1 {
+    color: #6E6A6A;
+}
 .btn{
     align-self: center;
     background-color: #6E6A6A;
     color:white;
     border-radius: 1.5rem;
-
 }
 canvas{
     top: 40vh;
+    width:100vw;
     z-index: -1;
     position: fixed;
 }
 
 #analysis-container{
     position: relative;
-    display: flex;
     height:40vh;
+    display: flex;
     justify-content: center;
     #result-container{
         text-align: center;
@@ -29,6 +31,23 @@ canvas{
     display: flex;
     justify-content: center;
     height:20vh;
+    text-align: center;
+}
+
+#pitch-display{
+    padding-top: 3vh;
+    font-size: 1.5rem;
+}
+
+#note-display{
+    font-size: 5rem;
+    line-height: 6rem;
+    font-weight: bold;
+}
+
+#detune-display{
+    font-size: 1.5rem;
+    line-height: 5rem;
 }
 
 
