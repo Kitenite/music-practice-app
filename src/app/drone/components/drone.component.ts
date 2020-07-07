@@ -12,7 +12,7 @@ export class DroneComponent {
 
   constructor(private droneAudioService:DroneAudioService) { }
   notes:[MusicalNote] = (musicalNotes as any).default;
-  activeNote = this.notes[0];
+  activeNote;
 
 
   ngOnDestroy(): void{
