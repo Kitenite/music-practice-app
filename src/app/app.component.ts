@@ -25,7 +25,11 @@ export class AppComponent {
         label: 'Tuner',
         link: '/tuner',
         index: 2
-      }, 
+      }, {
+        label: 'Timer',
+        link: '/timer',
+        index: 3
+      }
     ];
   }
   ngOnInit(): void {
