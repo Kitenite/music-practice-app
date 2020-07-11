@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { count } from 'console';
-
+import { CountdownTimerService } from '../services/countdown-timer.service'
 @Component({
   selector: 'app-countdown-timer',
   templateUrl: './countdown-timer.component.html',
@@ -8,19 +8,25 @@ import { count } from 'console';
 })
 export class CountdownTimerComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public countdownService: CountdownTimerService
+    ) { }
 
   timeOptions:TimeOption[] = [
     {name:"hours", secondsMultiplier:3600, currentValue:0},
     {name:"minutes", secondsMultiplier:60, currentValue:0},
     {name:"seconds", secondsMultiplier:1, currentValue:0}
   ]
-
+  timeLeft:number = 0;
   timeUnit:number[]=[];
-  countdownTime:number;
+  viewableTime:string = "00:00:00";
 
   ngOnInit(): void {
     this.generateUnits();
+    this.countdownService.subscribeTime().subscribe(timeLeft => {
+      this.timeLeft = timeLeft;
+      this.updateViewableTime(timeLeft)
+    })
   }
 
   generateUnits(){
@@ -30,14 +36,17 @@ export class CountdownTimerComponent implements OnInit {
   }
 
   startTimer(){
-    this.countdownTime = 0;
+    var duration = 0;
     this.timeOptions.forEach(option => {
-      this.countdownTime += option.currentValue*option.secondsMultiplier;
+      duration += option.currentValue*option.secondsMultiplier;
     });
-    // TODO: Extract service for countdown here
-    console.log(this.countdownTime);
+    this.countdownService.startTimer(duration);
+    this.updateViewableTime(duration);
   }
 
+  updateViewableTime(timeLeft){
+    this.viewableTime = new Date(timeLeft*1000).toISOString().substr(11, 8);
+  }
 }
 
 interface TimeOption{
