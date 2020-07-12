@@ -1,0 +1,43 @@
+#timer-container{
+    height:90vh;
+    width:100vw;
+    display: inline-flexbox;
+    justify-content: center;
+    align-items: center;  
+    text-align: center;
+}
+
+mat-progress-spinner{
+    margin:0 auto;
+    ::ng-deep circle {
+        stroke: #74C9FF;
+        stroke-width: 1rem;
+    }
+}
+
+#timer-progress-text{
+    position: relative;
+    top: -110px;
+    font-size: 2rem;
+    color: #6E6A6A;
+}
+
+#time-select-container{
+}
+
+#timer-progress-container{
+    display: inline-flexbox;
+    justify-content: center;
+    align-items: center;
+}
+
+mat-form-field {
+    width:100px;
+}
+
+button{
+    align-self: center;
+    background-color: #6E6A6A;
+    color:white;
+    border-radius: 1.5rem;
+}

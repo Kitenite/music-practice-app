@@ -1,5 +1,18 @@
-<select *ngFor="let option of timeOptions" name="{{ option.name }}" (change)="option.currentValue=$event.target.value">
+<!-- <select *ngFor="let option of timeOptions" name="{{ option.name }}" >
     <option *ngFor="let unit of timeUnit" value="{{ unit }}">{{ unit }} {{ option.name }}</option>
-</select>
-<p>{{ viewableTime }}</p>
-<button (click)="startTimer()">Start Timer</button>
+</select> -->
+<div id="timer-container">
+    <div id="time-select-container">
+        <mat-form-field appearance="outline" *ngFor="let option of timeOptions">
+            <mat-label>{{ option.name }}</mat-label>
+            <mat-select (selectionChange)="option.currentValue=$event.value" >
+                <mat-option *ngFor="let unit of timeUnit" [value]="unit">{{ unit }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div id="timer-progress-container">
+        <mat-progress-spinner mode="determinate" [value]="timeLeft/fullDuration*100" [diameter]="200" strokeWidth="10"></mat-progress-spinner>
+        <p id="timer-progress-text">{{ viewableTime }}</p>
+    </div>
+    <button mat-flat-button (click)="startTimer()">Start Timer</button>
+</div>

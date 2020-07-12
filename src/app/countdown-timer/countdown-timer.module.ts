@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 
 import { CountdownTimerRoutingModule } from './countdown-timer-routing.module';
 import { CountdownTimerComponent } from './components/countdown-timer.component';
@@ -8,7 +12,10 @@ import { CountdownTimerComponent } from './components/countdown-timer.component'
   declarations: [CountdownTimerComponent],
   imports: [
     CommonModule,
-    CountdownTimerRoutingModule
+    CountdownTimerRoutingModule,
+    MatSelectModule,
+    MatButtonModule,
+    MatProgressSpinnerModule
   ]
 })
 export class CountdownTimerModule { }

@@ -17,6 +17,7 @@ export class CountdownTimerComponent implements OnInit {
     {name:"minutes", secondsMultiplier:60, currentValue:0},
     {name:"seconds", secondsMultiplier:1, currentValue:0}
   ]
+  fullDuration = 1;
   timeLeft:number = 0;
   timeUnit:number[]=[];
   viewableTime:string = "00:00:00";
@@ -36,12 +37,12 @@ export class CountdownTimerComponent implements OnInit {
   }
 
   startTimer(){
-    var duration = 0;
+    this.fullDuration = 0;
     this.timeOptions.forEach(option => {
-      duration += option.currentValue*option.secondsMultiplier;
+      this.fullDuration += option.currentValue*option.secondsMultiplier;
     });
-    this.countdownService.startTimer(duration);
-    this.updateViewableTime(duration);
+    this.countdownService.startTimer(this.fullDuration);
+    this.updateViewableTime(this.fullDuration);
   }
 
   updateViewableTime(timeLeft){
