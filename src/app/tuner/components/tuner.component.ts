@@ -37,6 +37,7 @@ export class TunerComponent implements OnInit, OnDestroy {
   detuneInt:number = 0;
   note:string = "--";
   detune:string = "--"
+  detuneColor:string = "grey";
 
   constructor(
     private mediaHandlerService:MediaHandlerService,
@@ -84,8 +85,8 @@ export class TunerComponent implements OnInit, OnDestroy {
   updatePitch() {
     var freq = this.mediaHandlerService.getUpdatedFrequency();
     var ac = this.audioAnalyzerService.autoCorrelate(freq, this.mediaHandlerService.getSampleRate() );
-    this.drawCanvas(freq)
     this.getPitch(ac);
+    this.drawCanvas(freq)
     this.animationFrame = requestAnimationFrame(() => this.updatePitch())
   }
 
@@ -96,7 +97,7 @@ export class TunerComponent implements OnInit, OnDestroy {
     waveCanvas.canvas.width  = width;
     waveCanvas.canvas.height = height;
     waveCanvas.clearRect(0,0,width,height);
-    waveCanvas.strokeStyle = "grey";
+    waveCanvas.strokeStyle = this.detuneColor;
     waveCanvas.lineWidth = 5;
     waveCanvas.beginPath();
     waveCanvas.moveTo(0,buf[0]);
@@ -119,12 +120,14 @@ export class TunerComponent implements OnInit, OnDestroy {
 
       if (Math.abs(this.detuneInt) < this.acceptableDetune) {
         this.detune = "good";
+        this.detuneColor = "#66E1B7"
       } else {
         if (this.detuneInt < 0){
           this.detune = "flat";
         } else{
           this.detune = "sharp";
         }
+        this.detuneColor = "#FF7979"
       }
     }
   }
