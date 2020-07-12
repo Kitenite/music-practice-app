@@ -1,5 +1,5 @@
 #timer-container{
-    height:90vh;
+    height:80vh;
     width:100vw;
     display: inline-flexbox;
     justify-content: center;
@@ -23,9 +23,11 @@ mat-progress-spinner{
 }
 
 #time-select-container{
+    padding-top:20vh;
 }
 
 #timer-progress-container{
+    padding-top:20vh;
     display: inline-flexbox;
     justify-content: center;
     align-items: center;
@@ -35,9 +37,19 @@ mat-form-field {
     width:100px;
 }
 
-button{
+#start-timer-button{
+    margin-top: 10vh;
     align-self: center;
     background-color: #6E6A6A;
     color:white;
     border-radius: 1.5rem;
+    font-weight: normal;
+}
+
+button{
+    margin: 10vw;
+    background-color: white;
+    font-size: 1rem;
+    font-weight: lighter;
+    border: white;
 }

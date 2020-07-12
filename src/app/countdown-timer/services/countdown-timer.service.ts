@@ -8,8 +8,10 @@ export class CountdownTimerService {
 
   constructor() { }
   
-  timeLeft:number = 0
+  fullDuration = 1;
+  timeLeft:number = -1
   timeInterval;
+  timerActive:boolean = false;
 
   subscribeTime():Observable<number>{
     return new Observable(observer => {
@@ -21,15 +23,17 @@ export class CountdownTimerService {
 
   startTimer(duration:number){
     this.resetTimer();
+    this.fullDuration = duration;
     this.timeLeft = duration;
     this.resumeTimer();
+    this.timerActive = true;
     return 
   }
 
   resumeTimer(){
     this.timeInterval = setInterval( () => {
       this.timeLeft-=1;
-      if (this.timeLeft <=0){
+      if (this.timeLeft <= -1){
         this.resetTimer()
       }
     }, 1000)
@@ -42,6 +46,7 @@ export class CountdownTimerService {
 
   resetTimer(){
     this.pauseTimer();
-    this.timeLeft = 0;
+    this.timeLeft = -1;
+    this.timerActive = false;
   }
 }

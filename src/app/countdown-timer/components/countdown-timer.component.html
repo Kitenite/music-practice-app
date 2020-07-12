@@ -1,18 +1,19 @@
-<!-- <select *ngFor="let option of timeOptions" name="{{ option.name }}" >
-    <option *ngFor="let unit of timeUnit" value="{{ unit }}">{{ unit }} {{ option.name }}</option>
-</select> -->
 <div id="timer-container">
-    <div id="time-select-container">
+    <div id="time-select-container" *ngIf="!countdownService.timerActive">
         <mat-form-field appearance="outline" *ngFor="let option of timeOptions">
             <mat-label>{{ option.name }}</mat-label>
-            <mat-select (selectionChange)="option.currentValue=$event.value" >
+            <mat-select (selectionChange)="option.currentValue=$event.value" [value]="option.currentValue">
                 <mat-option *ngFor="let unit of timeUnit" [value]="unit">{{ unit }}</mat-option>
             </mat-select>
         </mat-form-field>
     </div>
-    <div id="timer-progress-container">
-        <mat-progress-spinner mode="determinate" [value]="timeLeft/fullDuration*100" [diameter]="200" strokeWidth="10"></mat-progress-spinner>
+    <div id="timer-progress-container" *ngIf="countdownService.timerActive">
+        <mat-progress-spinner mode="determinate" [value]="timeLeft/countdownService.fullDuration*100" [diameter]="200" strokeWidth="10"></mat-progress-spinner>
         <p id="timer-progress-text">{{ viewableTime }}</p>
+        <div>
+            <button mat-flat-button id="toggle-timer-button" (click)="togglePause()">{{ countdownService.timeInterval ? 'Pause' : 'Resume' }}</button>
+            <button mat-flat-button id="reset-timer-button" (click)="resetTimer()">Reset</button>
+        </div>
     </div>
-    <button mat-flat-button (click)="startTimer()">Start Timer</button>
+    <button mat-flat-button id="start-timer-button" (click)="startTimer()" *ngIf="!countdownService.timerActive" >Start Timer</button>
 </div>
