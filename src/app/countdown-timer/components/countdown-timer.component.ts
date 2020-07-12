@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { count } from 'console';
-import { CountdownTimerService } from '../services/countdown-timer.service'
+import { CountdownTimerService } from '../services/countdown-timer.service';
+
 @Component({
   selector: 'app-countdown-timer',
   templateUrl: './countdown-timer.component.html',
@@ -21,6 +21,7 @@ export class CountdownTimerComponent implements OnInit {
   timeLeft:number = 0;
   timeUnit:number[]=[];
   viewableTime:string = "00:00:00";
+  alertAudio;
 
   ngOnInit(): void {
     this.generateUnits();
@@ -28,7 +29,7 @@ export class CountdownTimerComponent implements OnInit {
       this.timeLeft = timeLeft;
       this.updateViewableTime(timeLeft)
       if (timeLeft == 0) {
-        alert("Timer Completed");
+        this.timerDoneAlert();
         this.resetTimer();
       }
     })
@@ -41,6 +42,7 @@ export class CountdownTimerComponent implements OnInit {
   }
 
   startTimer(){
+    this.setAlertSound()
     var duration = 0;
     this.timeOptions.forEach(option => {
       duration += option.currentValue*option.secondsMultiplier;
@@ -66,6 +68,17 @@ export class CountdownTimerComponent implements OnInit {
 
   updateViewableTime(timeLeft){
     this.viewableTime = new Date(timeLeft*1000).toISOString().substr(11, 8);
+  }
+
+  setAlertSound(){
+    this.alertAudio = new Audio();
+    this.alertAudio.src = "../../assets/audio/timerAlert.wav";
+    this.alertAudio.load();
+  }
+
+  timerDoneAlert(){
+    this.alertAudio.play();
+    alert("Timer Completed");
   }
 }
 
