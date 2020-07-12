@@ -72,13 +72,13 @@ export class CountdownTimerComponent implements OnInit {
 
   setAlertSound(){
     this.alertAudio = new Audio();
-    this.alertAudio.src = "../../assets/audio/timerAlert.wav";
+    this.alertAudio.src = "../../assets/audio/timerAlert.mp3";
     this.alertAudio.load();
   }
 
   timerDoneAlert(){
     this.alertAudio.play();
-    alert("Timer Completed");
+    setTimeout(() => { alert("Timer completed!"); }, 1);
   }
 }
 
