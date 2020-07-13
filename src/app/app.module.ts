@@ -12,6 +12,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { MetronomeModule } from './metronome/metronome.module';
 import { TunerModule } from './tuner/tuner.module';
 import { HeaderModule } from './header/header.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 
@@ -26,7 +28,8 @@ import { HeaderModule } from './header/header.module';
     TunerModule,
     BrowserAnimationsModule,
     MatTabsModule,
-    HeaderModule
+    HeaderModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   exports: [],
   providers: [],
