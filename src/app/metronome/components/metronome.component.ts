@@ -73,6 +73,9 @@ export class MetronomeComponent implements OnInit {
     if(!this.metronomeAudio.isPlaying){
       this.timeSyncService.requestNextBeat();
       this.playerState.state = PlayerState.Waiting;
+      if (!navigator.onLine){
+        this.playBeat()
+      }
     } else{
       this.playBeat() // Toggle play button
     }
@@ -93,6 +96,9 @@ export class MetronomeComponent implements OnInit {
 
   sendTempo(){
     this.timeSyncService.requestNewTempo(this.playerState.tempo)
+    if (!navigator.onLine){
+      this.metronomeAudio.tempo = this.playerState.tempo
+    }
   }
 
   toggleResolution(){
