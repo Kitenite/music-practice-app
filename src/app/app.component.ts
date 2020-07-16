@@ -29,6 +29,10 @@ export class AppComponent {
         label: 'Timer',
         link: '/timer',
         index: 3
+      }, {
+        label: 'Record',
+        link: '/record',
+        index: 3
       }
     ];
   }
