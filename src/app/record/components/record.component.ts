@@ -11,7 +11,6 @@ export class RecordComponent implements AfterViewInit{
 
   private stream: MediaStream;
   private recordRTC: any;
-  videoSrc:string;
 
   @ViewChild('video') video;
 
@@ -37,10 +36,7 @@ export class RecordComponent implements AfterViewInit{
   successCallback(stream: MediaStream) {
 
     var options = {
-      mimeType: 'video/webm', // or video/webm\;codecs=h264 or video/webm\;codecs=vp9
-      audioBitsPerSecond: 128000,
-      videoBitsPerSecond: 128000,
-      bitsPerSecond: 128000 // if this line is provided, skip above two
+      mimeType: 'video/webm'
     };
     this.stream = stream;
     this.recordRTC = RecordRTC(stream, options);
@@ -77,20 +73,9 @@ export class RecordComponent implements AfterViewInit{
     let video: HTMLVideoElement = this.video.nativeElement;
     video.pause();
     video.srcObject = null;
-    let recordRTC = this.recordRTC;
-    this.toggleControls();
-    var recordedBlob = recordRTC.getBlob();
     video.src = audioVideoWebMURL
     video.load();
-    video.play()
-    console.log(this.videoSrc)
-    recordRTC.getDataURL(function (dataURL) {
-      // Do something
-    });
-  }
-
-  loadVid(){
-    this.videoSrc = "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+    this.toggleControls();
   }
 
   download() {
