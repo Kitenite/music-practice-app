@@ -1,18 +1,12 @@
-<div class="row">
-    <div class="col-xs-12">
-      <video #video class="video" 
+<div id="main-container">
+    <video #video class="video" 
         [muted]="isRecording"
         [controls]="!isRecording"
-        [autoplay]="isRecording"
-      >
+        [autoplay]="isRecording" >
         Your browser does not support HTML5 video.
-      </video>
+    </video>
+    <div id="button-container">
+        <button md-raised-button color="primary" (click)="toggleRecording()">{{ !isRecording ? "Record" : "Stop" }} </button>
+        <button md-raised-button color="primary" (click)="togglePauseRecording()"> {{ isPaused ? "Resume" : "Pause" }}</button>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <button md-raised-button color="primary" (click)="startRecording()"> Record </button>
-      <button md-raised-button color="primary"(click) ="stopRecording()"> Stop</button>
-      <button md-raised-button color="primary" (click)="download()"> Download</button>
-    </div>
-  </div>
+</div>

@@ -10,6 +10,7 @@ export class RecordComponent implements AfterViewInit{
   @ViewChild('video') videoView;
   video:HTMLVideoElement;
   isRecording: boolean = false;
+  isPaused:boolean = false;
 
   constructor(
     private videoRecordingService:VideoRecordingService
@@ -20,6 +21,14 @@ export class RecordComponent implements AfterViewInit{
     this.video = this.videoView.nativeElement;
     console.log(this.video.controls)
     this.video.controls = false;
+  }
+
+  toggleRecording(){
+    if (!this.isRecording){
+      this.startRecording()
+    } else {
+      this.stopRecording()
+    }
   }
 
   startRecording() {
@@ -33,6 +42,17 @@ export class RecordComponent implements AfterViewInit{
       this.isRecording = true
     })
   }
+
+  togglePauseRecording(){
+    if (!this.isPaused){
+      this.videoRecordingService.pauseRecording();
+      this.isPaused = true;
+    } else {
+      this.videoRecordingService.resumeRecording();
+      this.isPaused = false;
+    }
+  }
+
 
   stopRecording() {
     this.videoRecordingService.stopRecording(this.processVideo.bind(this));

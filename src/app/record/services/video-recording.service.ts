@@ -17,11 +17,7 @@ export class VideoRecordingService {
     return navigator.mediaDevices.getUserMedia(mediaConstraints)
   }
 
-  stopRecording(callback){
-    this.stream.getAudioTracks().forEach(track => track.stop());
-    this.stream.getVideoTracks().forEach(track => track.stop());
-    this.recordRTC.stopRecording(callback);
-  }
+
 
   startRecording(stream: MediaStream) {
     var options = {
@@ -30,9 +26,23 @@ export class VideoRecordingService {
     this.stream = stream;
     this.recordRTC = RecordRTC(stream, options);
     this.recordRTC.startRecording();
+
+    console.log(this.recordRTC.getState())
   }
 
+  pauseRecording(){
+    this.recordRTC.pauseRecording();
+  }
 
+  resumeRecording(){
+    this.recordRTC.resumeRecording();
+  }
+
+  stopRecording(callback){
+    this.stream.getAudioTracks().forEach(track => track.stop());
+    this.stream.getVideoTracks().forEach(track => track.stop());
+    this.recordRTC.stopRecording(callback);
+  }
 
   downloadVideo(){
     this.recordRTC.save('video.webm');
