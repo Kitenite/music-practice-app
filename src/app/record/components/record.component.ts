@@ -1,7 +1,5 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-let RecordRTC = require('recordrtc/RecordRTC.min');
-
+import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { VideoRecordingService } from '../services/video-recording.service'
 @Component({
   selector: 'record',
   templateUrl: './record.component.html',
@@ -9,45 +7,25 @@ let RecordRTC = require('recordrtc/RecordRTC.min');
 })
 export class RecordComponent implements AfterViewInit{
 
-  private stream: MediaStream;
-  private recordRTC: any;
+  @ViewChild('video') videoView;
+  video:HTMLVideoElement;
 
-  @ViewChild('video') video;
-
-  constructor( private sanitizer:DomSanitizer) {
-    // Do stuff
-  }
+  constructor(
+    private videoRecordingService:VideoRecordingService
+  ) {}
 
   ngAfterViewInit() {
     // set the initial state of the video
-    let video:HTMLVideoElement = this.video.nativeElement;
-    video.muted = false;
-    video.controls = true;
-    video.autoplay = false;
+    this.video = this.videoView.nativeElement;
+    this.video.muted = false;
+    this.video.controls = true;
+    this.video.autoplay = false;
   }
 
   toggleControls() {
-    let video: HTMLVideoElement = this.video.nativeElement;
-    video.muted = !video.muted;
-    video.controls = !video.controls;
-    video.autoplay = !video.autoplay;
-  }
-
-  successCallback(stream: MediaStream) {
-
-    var options = {
-      mimeType: 'video/webm'
-    };
-    this.stream = stream;
-    this.recordRTC = RecordRTC(stream, options);
-    this.recordRTC.startRecording();
-    let video: HTMLVideoElement = this.video.nativeElement;
-    video.srcObject = stream;
-    this.toggleControls();
-  }
-
-  errorCallback() {
-    //handle error here
+    this.video.muted = !this.video.muted;
+    this.video.controls = !this.video.controls;
+    this.video.autoplay = !this.video.autoplay;
   }
 
   startRecording() {
@@ -55,30 +33,26 @@ export class RecordComponent implements AfterViewInit{
       video: true,
       audio: true
     };
-    navigator.mediaDevices
-      .getUserMedia(mediaConstraints)
-      .then(this.successCallback.bind(this), this.errorCallback.bind(this));
+    this.videoRecordingService.initRecording(mediaConstraints).then((stream)=>{
+      this.videoRecordingService.startRecording(stream);
+      this.video.srcObject = stream;
+      this.toggleControls();
+    })
   }
 
   stopRecording() {
-    let recordRTC = this.recordRTC;
-    recordRTC.stopRecording(this.processVideo.bind(this));
-    let stream = this.stream;
-    stream.getAudioTracks().forEach(track => track.stop());
-    stream.getVideoTracks().forEach(track => track.stop());
+    this.videoRecordingService.stopRecording(this.processVideo.bind(this));
   }
 
-
   processVideo(audioVideoWebMURL) {
-    let video: HTMLVideoElement = this.video.nativeElement;
-    video.pause();
-    video.srcObject = null;
-    video.src = audioVideoWebMURL
-    video.load();
+    this.video.pause();
+    this.video.srcObject = null;
+    this.video.src = audioVideoWebMURL;
+    this.video.load();
     this.toggleControls();
   }
 
   download() {
-    this.recordRTC.save('video.webm');
+    this.videoRecordingService.downloadVideo();
   }
 }
