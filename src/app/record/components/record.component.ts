@@ -9,6 +9,7 @@ export class RecordComponent implements AfterViewInit{
 
   @ViewChild('video') videoView;
   video:HTMLVideoElement;
+  isRecording: boolean = false;
 
   constructor(
     private videoRecordingService:VideoRecordingService
@@ -17,15 +18,8 @@ export class RecordComponent implements AfterViewInit{
   ngAfterViewInit() {
     // set the initial state of the video
     this.video = this.videoView.nativeElement;
-    this.video.muted = false;
-    this.video.controls = true;
-    this.video.autoplay = false;
-  }
-
-  toggleControls() {
-    this.video.muted = !this.video.muted;
-    this.video.controls = !this.video.controls;
-    this.video.autoplay = !this.video.autoplay;
+    console.log(this.video.controls)
+    this.video.controls = false;
   }
 
   startRecording() {
@@ -36,12 +30,13 @@ export class RecordComponent implements AfterViewInit{
     this.videoRecordingService.initRecording(mediaConstraints).then((stream)=>{
       this.videoRecordingService.startRecording(stream);
       this.video.srcObject = stream;
-      this.toggleControls();
+      this.isRecording = true
     })
   }
 
   stopRecording() {
     this.videoRecordingService.stopRecording(this.processVideo.bind(this));
+    this.isRecording = false;
   }
 
   processVideo(audioVideoWebMURL) {
@@ -49,7 +44,6 @@ export class RecordComponent implements AfterViewInit{
     this.video.srcObject = null;
     this.video.src = audioVideoWebMURL;
     this.video.load();
-    this.toggleControls();
   }
 
   download() {
