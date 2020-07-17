@@ -152,10 +152,18 @@ input[type=range] {
 #online-icon {
   height: 1rem;
   width: 1rem;
-  background-color: $main-green;
+  
   border-radius: 50%;
   display: inline-block;
   margin-right: 0.5rem;
+
+  &.online{
+    background-color: $main-green;
+  }
+
+  &.offline{
+    background-color: $main-grey;
+  }
 }
 
 /* BPM display */

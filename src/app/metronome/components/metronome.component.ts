@@ -21,6 +21,8 @@ export class MetronomeComponent implements OnInit {
   playerState:MetronomePlayer = new MetronomePlayer();
   clientCount:number = 1;
 
+  isOnline = false;
+
   constructor(
     private timeSyncService:TimeSyncService,
     public metronomeAudio:MetronomeAudioService
@@ -29,6 +31,7 @@ export class MetronomeComponent implements OnInit {
   ngOnInit(): void {
     this.timeSyncService.subscribeNextBeat().pipe(takeUntil(this.ngUnsubscribe)).subscribe(nextBeat => this.nextBeatReceived(nextBeat));
     this.timeSyncService.subscribeClientCount().pipe(takeUntil(this.ngUnsubscribe)).subscribe(clientCount => this.clientCount = clientCount.count)
+    this.isOnline = navigator.onLine;
   }
 
   ngOnDestroy() {

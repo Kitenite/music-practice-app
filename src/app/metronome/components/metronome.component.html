@@ -9,8 +9,8 @@
 
     <!-- Active client count -->
     <div id="clients">
-        <span id="online-icon"></span>
-        <span id="client-count">{{ this.clientCount }}</span> PLAYERS ONLINE
+        <span id="online-icon" class="{{ isOnline ? 'online' : 'offline' }}"></span>
+        <span id="client-count">{{ isOnline ? this.clientCount : "" }} </span>{{ isOnline ? "PLAYERS ONLINE" : "NO CONNECTION"}}
     </div>
 
     <!-- Display BPM -->
