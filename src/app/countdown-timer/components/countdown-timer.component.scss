@@ -1,3 +1,5 @@
+@import '../../../assets/styles/variables.scss';
+
 #timer-container{
     height:80vh;
     width:100vw;
@@ -10,7 +12,7 @@
 mat-progress-spinner{
     margin:0 auto;
     ::ng-deep circle {
-        stroke: #74C9FF;
+        stroke: $main-blue;
         stroke-width: 1rem;
     }
 }
@@ -19,7 +21,7 @@ mat-progress-spinner{
     position: relative;
     top: -110px;
     font-size: 2rem;
-    color: #6E6A6A;
+    color: $main-txt-color;
 }
 
 #time-select-container{
@@ -40,16 +42,11 @@ mat-form-field {
 #start-timer-button{
     margin-top: 10vh;
     align-self: center;
-    background-color: #6E6A6A;
-    color:white;
     border-radius: 1.5rem;
-    font-weight: normal;
 }
 
-button{
+.text-button{
     margin: 10vw;
-    background-color: white;
     font-size: 1rem;
-    font-weight: lighter;
-    border: white;
 }
+

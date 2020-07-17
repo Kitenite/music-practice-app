@@ -26,8 +26,6 @@ export class VideoRecordingService {
     this.stream = stream;
     this.recordRTC = RecordRTC(stream, options);
     this.recordRTC.startRecording();
-
-    console.log(this.recordRTC.getState())
   }
 
   pauseRecording(){

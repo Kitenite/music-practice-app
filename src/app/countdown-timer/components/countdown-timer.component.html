@@ -11,9 +11,9 @@
         <mat-progress-spinner mode="determinate" [value]="timeLeft/countdownService.fullDuration*100" [diameter]="200" strokeWidth="10"></mat-progress-spinner>
         <p id="timer-progress-text">{{ viewableTime }}</p>
         <div>
-            <button mat-flat-button id="toggle-timer-button" (click)="togglePause()">{{ countdownService.timeInterval ? 'Pause' : 'Resume' }}</button>
-            <button mat-flat-button id="reset-timer-button" (click)="resetTimer()">Reset</button>
+            <button mat-flat-button class="text-button" id="toggle-timer-button" (click)="togglePause()">{{ countdownService.timeInterval ? 'Pause' : 'Resume' }}</button>
+            <button mat-flat-button class="text-button" id="reset-timer-button" (click)="resetTimer()">Reset</button>
         </div>
     </div>
-    <button mat-flat-button id="start-timer-button" (click)="startTimer()" *ngIf="!countdownService.timerActive" >Start Timer</button>
+    <button mat-flat-button class="rounded-button" (click)="startTimer()" *ngIf="!countdownService.timerActive" >Start Timer</button>
 </div>

@@ -1,12 +1,14 @@
+@import '../../../assets/styles/variables.scss';
+
 h1 {
-    color: #6E6A6A;
+    color: $main-txt-color;
 }
-.btn{
+
+button{
     align-self: center;
-    background-color: #6E6A6A;
-    color:white;
     border-radius: 1.5rem;
 }
+
 canvas{
     top: 40vh;
     left: -1vh;

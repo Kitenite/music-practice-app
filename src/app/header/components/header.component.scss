@@ -1,10 +1,13 @@
+@import '../../../assets/styles/variables.scss';
+
 #header-container{
-    color: rgb(107, 107, 107);
+    color: $main-txt_color;
     font-size: large;
     height: 5%;
     display: inline-block;
     width: 100%;
 }
+
 #menu-button{
     font-size: large;
     margin-left: 2vw;

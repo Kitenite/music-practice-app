@@ -1,5 +1,5 @@
 <div id="analysis-container">
-  <button mat-flat-button (click)="initiateRecording()" *ngIf="!recording" class="btn btn-primary" > Start Tuning </button>
+  <button mat-flat-button (click)="initiateRecording()" *ngIf="!recording" class="rounded-button"> Start Tuning </button>
   <div id="result-container" [hidden]="!recording">
     <h1 id="pitch-display">{{ pitch }} Hz</h1>
     <h1 id="note-display">{{ note }}</h1>
@@ -20,7 +20,7 @@
         [step]="5"
         [thumbLabel]="true">
       </mat-slider>
-      <button mat-flat-button *ngIf="recording" class="btn btn-primary" (click)="picking=!picking" >{{ picking ? "Confirm" : "Set a target"}}</button>
+      <button mat-flat-button *ngIf="recording" class="rounded-button" (click)="picking=!picking" >{{ picking ? "Confirm" : "Set a target"}}</button>
     </div>
   </div>
 </div>

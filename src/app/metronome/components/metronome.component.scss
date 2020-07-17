@@ -1,13 +1,5 @@
-/* Global */
-$main-white:white;
-$main-blue:#74C9FF;
-$alt-blue:#5ABEFE;
-$main-green:#66E1B7;
-$main-grey:#CBCBCB;
-$main-red:#FF9393;
-$main-txt-color:#6E6A6A;
+@import '../../../assets/styles/variables.scss';
 
-  
 :host {
   height: 100%;
   width: 100%;
@@ -71,7 +63,7 @@ input[type=range] {
     height: 20px;
     width: 39px;
     border-radius: 7px;
-    background: #65001c;
+    background: $main-blue;
     cursor: pointer;
   }
 
@@ -87,7 +79,7 @@ input[type=range] {
   }
 
   &::-ms-fill-lower {
-    background: #ac51b5;
+    background: $main-blue;
     border: 0px solid #000101;
     border-radius: 50px;
     box-shadow: 0px 0px 0px #000000, 0px 0px 0px #0d0d0d;
