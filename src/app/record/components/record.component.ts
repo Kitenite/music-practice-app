@@ -70,7 +70,7 @@ export class RecordComponent implements AfterViewInit{
     
   }
 
-  download() {
+  downloadRecording() {
     this.videoRecordingService.downloadVideo();
   }
 
