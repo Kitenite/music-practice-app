@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DroneAudioService } from '../services/drone-audio.service'
-import { MusicalNote } from '../../shared/models/musical-notes'
-import * as musicalNotes from '../../../assets/musicalNotes.json'
+import { MusicalNote } from '../../../shared/models/musical-notes'
+import * as musicalNotes from '../../../../assets/musicalNotes.json'
 
 @Component({
   selector: 'app-drone',

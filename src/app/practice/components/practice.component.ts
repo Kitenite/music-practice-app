@@ -1,16 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-practice',
+  templateUrl: './practice.component.html',
+  styleUrls: ['./practice.component.scss']
 })
-export class AppComponent {
+export class PracticeComponent implements OnInit {
   
-  title = 'practice-app';
+  title = 'practice';
   navLinks: any[];
   activeLinkIndex = -1; 
+
   constructor(private router: Router) {
     this.navLinks = [
       {
