@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "practice-cd333": {
+      "hosting": {
+        "practice-app": [
+          "practice-cd333"
+        ]
+      }
+    }
+  }
+}
