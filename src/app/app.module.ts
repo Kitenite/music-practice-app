@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { NgModule } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 
 // Custom components
@@ -18,8 +19,9 @@ import { environment } from '../environments/environment';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
+    
+    AppRoutingModule,
     HeaderModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],

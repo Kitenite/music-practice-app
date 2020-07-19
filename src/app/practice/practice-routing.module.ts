@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PracticeComponent } from './components/practice.component';
 
 const routes: Routes = [
+  { path: '', component: PracticeComponent },
   { path: 'metronome', loadChildren: () => import('./metronome/metronome.module').then(m => m.MetronomeModule) },
   { path: 'tuner', loadChildren: () => import('./tuner/tuner.module').then(m => m.TunerModule) },
   { path: 'drone', loadChildren: () => import('./drone/drone.module').then(m => m.DroneModule) },
