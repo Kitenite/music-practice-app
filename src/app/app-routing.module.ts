@@ -6,7 +6,9 @@ const routes: Routes = [
   { path: 'practice', loadChildren: () => import('./practice/practice.module').then(m => m.PracticeModule) }
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes, { enableTracing: true })
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { } 
