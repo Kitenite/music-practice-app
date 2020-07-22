@@ -1,10 +1,10 @@
 // Largely adapted from https://github.com/cwilso/PitchDetect
 
 import { Component, ViewChild, ElementRef, OnInit, OnDestroy } from '@angular/core';
-import { MediaHandlerService } from '../../shared/services/media-handler.service'
+import { MediaHandlerService } from '../../../shared/services/media-handler.service'
 import { AudioAnalyzerService } from '../services/audio-analyzer.service';
-import * as musicalNotes from '../../../assets/musicalNotes.json'
-import { MusicalNote } from '../../shared/models/musical-notes'
+import * as musicalNotes from '../../../../assets/musicalNotes.json'
+import { MusicalNote } from '../../../shared/models/musical-notes'
 
 @Component({
   selector: 'app-tuner',
