@@ -6,20 +6,15 @@
     </button>
 
     <mat-menu #menu="matMenu">
-        <button mat-menu-item>
-            <mat-icon>music_note</mat-icon>
-            <span>Practice</span>
-        </button>
-        <button mat-menu-item disabled>
-            <mat-icon>calendar_today</mat-icon>
-            <span>Calendar</span>
-        </button>
-        <button mat-menu-item disabled>
-            <mat-icon>account_circle</mat-icon>
-            <span>Account</span>
+        <button mat-menu-item
+            *ngFor="let link of navLinks"
+            [class.active]="link.index == activeLinkIndex"
+            (click)="navButtonClicked(link)"
+            [disabled] = "link.disabled" >
+            <mat-icon [class.active]="link.index == activeLinkIndex">{{ link.icon }}</mat-icon>
+            <span>{{ link.label }}</span>
         </button>
     </mat-menu>
-
     <app-timer></app-timer>
     
 </div>
