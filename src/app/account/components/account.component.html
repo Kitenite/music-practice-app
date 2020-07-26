@@ -1,1 +1,8 @@
-<p>In progress :)</p>
+<button (click)="signIn()"> Sign In </button>
+<button (click)="signUp()"> Sign Up </button>
+<ul>
+    <li class="text" *ngFor="let item of items | async">
+        <p>{{item.name}}</p>
+        <p>{{item.email}}</p>
+    </li>
+</ul>
