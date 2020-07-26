@@ -22,6 +22,7 @@ export class CountdownTimerComponent implements OnInit {
   timeUnit:number[]=[];
   viewableTime:string = "00:00:00";
   alertAudio;
+  alertPlaying = false;
 
   ngOnInit(): void {
     this.generateUnits();
@@ -73,13 +74,23 @@ export class CountdownTimerComponent implements OnInit {
   setAlertSound(){
     this.alertAudio = new Audio();
     this.alertAudio.src = "../../assets/audio/timerAlert.mp3";
+    this.alertAudio.loop = true;
+    this.alertAudio.preload = false;
     this.alertAudio.load();
   }
 
   timerDoneAlert(){
     this.alertAudio.play();
-    setTimeout(() => { alert("Timer completed!"); }, 1);
+    this.alertPlaying = true;
   }
+
+  stopAlert(){
+    this.alertAudio.pause();
+    this.alertAudio.src = "";
+    this.alertAudio.currentTime = 0;
+    this.alertPlaying = false;
+  }
+
 }
 
 interface TimeOption{

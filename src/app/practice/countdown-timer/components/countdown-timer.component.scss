@@ -1,6 +1,7 @@
 @import '../../../../assets/styles/variables.scss';
 
 #timer-container{
+    color: $main-txt-color;
     height:80vh;
     width:100vw;
     display: inline-flexbox;
@@ -21,7 +22,6 @@ mat-progress-spinner{
     position: relative;
     top: -110px;
     font-size: 2rem;
-    color: $main-txt-color;
 }
 
 #time-select-container{
@@ -50,3 +50,10 @@ mat-form-field {
     font-size: 1rem;
 }
 
+#alert-box{
+    margin-top: 30vh;
+    font-size: 3rem;
+    button{
+        margin-top: 5vh;
+    }
+}

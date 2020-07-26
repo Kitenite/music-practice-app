@@ -1,19 +1,26 @@
 <div id="timer-container">
-    <div id="time-select-container" *ngIf="!countdownService.timerActive">
-        <mat-form-field appearance="outline" *ngFor="let option of timeOptions">
-            <mat-label>{{ option.name }}</mat-label>
-            <mat-select (selectionChange)="option.currentValue=$event.value" [value]="option.currentValue">
-                <mat-option *ngFor="let unit of timeUnit" [value]="unit">{{ unit }}</mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-    <div id="timer-progress-container" *ngIf="countdownService.timerActive">
-        <mat-progress-spinner mode="determinate" [value]="timeLeft/countdownService.fullDuration*100" [diameter]="200" strokeWidth="10"></mat-progress-spinner>
-        <p id="timer-progress-text">{{ viewableTime }}</p>
-        <div>
-            <button mat-flat-button class="text-button" id="toggle-timer-button" (click)="togglePause()">{{ countdownService.timeInterval ? 'Pause' : 'Resume' }}</button>
-            <button mat-flat-button class="text-button" id="reset-timer-button" (click)="resetTimer()">Reset</button>
+    <div [hidden]="this.alertPlaying">
+        <div id="time-select-container" *ngIf="!countdownService.timerActive">
+            <mat-form-field appearance="outline" *ngFor="let option of timeOptions">
+                <mat-label>{{ option.name }}</mat-label>
+                <mat-select (selectionChange)="option.currentValue=$event.value" [value]="option.currentValue">
+                    <mat-option *ngFor="let unit of timeUnit" [value]="unit">{{ unit }}</mat-option>
+                </mat-select>
+            </mat-form-field>
         </div>
+        <div id="timer-progress-container" *ngIf="countdownService.timerActive">
+            <mat-progress-spinner mode="determinate" [value]="timeLeft/countdownService.fullDuration*100" [diameter]="200" strokeWidth="10"></mat-progress-spinner>
+            <p id="timer-progress-text">{{ viewableTime }}</p>
+            <div>
+                <button mat-flat-button class="text-button" id="toggle-timer-button" (click)="togglePause()">{{ countdownService.timeInterval ? 'Pause' : 'Resume' }}</button>
+                <button mat-flat-button class="text-button" id="reset-timer-button" (click)="resetTimer()">Reset</button>
+            </div>
+        </div>
+        <button mat-flat-button class="rounded-button" (click)="startTimer()" *ngIf="!countdownService.timerActive" >Start Timer</button>
     </div>
-    <button mat-flat-button class="rounded-button" (click)="startTimer()" *ngIf="!countdownService.timerActive" >Start Timer</button>
+    <div id="alert-box" *ngIf="this.alertPlaying">
+        <p>Timer done!</p>
+        <button mat-flat-button class="rounded-button" (click)="stopAlert()">Stop Alert</button>
+    </div>
 </div>
+
