@@ -2,7 +2,7 @@
     <div *ngIf="auth.user$ | async as user; else login">
         <button  id="menu-button" mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" aria-label="Example icon-button with a menu">
             <mat-icon>{{ menuTrigger.menuOpen ? "keyboard_arrow_up" : "keyboard_arrow_down" }}</mat-icon>
-            Hello {{ user.displayName }}
+            Hello {{ user.displayName.split(" ")[0] }}
         </button>
 
         <mat-menu #menu="matMenu">
