@@ -15,7 +15,6 @@ import { User } from '../models/user';
 export class UserAuthService {
 
   user$: Observable<User>;
-
   constructor(
     private auth: AngularFireAuth,
     private store: AngularFirestore,
@@ -47,7 +46,7 @@ export class UserAuthService {
     // Sets user data to firestore on login
     const userRef: AngularFirestoreDocument<User> = this.store.doc(`users/${user.uid}`);
 
-    const data = {
+    const data:User = {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName

@@ -1,20 +1,32 @@
 <div id="header-container">
-
-    <button id="menu-button" mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" aria-label="Example icon-button with a menu">
-        <mat-icon>{{ menuTrigger.menuOpen ? "keyboard_arrow_up" : "keyboard_arrow_down" }}</mat-icon>
-        Hello Kalli
-    </button>
-
-    <mat-menu #menu="matMenu">
-        <button mat-menu-item
-            *ngFor="let link of navLinks"
-            [class.active]="link.index == activeLinkIndex"
-            (click)="navButtonClicked(link)"
-            [disabled] = "link.disabled" >
-            <mat-icon [class.active]="link.index == activeLinkIndex">{{ link.icon }}</mat-icon>
-            <span>{{ link.label }}</span>
+    <div *ngIf="auth.user$ | async as user; else login">
+        <button  id="menu-button" mat-icon-button [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger" aria-label="Example icon-button with a menu">
+            <mat-icon>{{ menuTrigger.menuOpen ? "keyboard_arrow_up" : "keyboard_arrow_down" }}</mat-icon>
+            Hello {{ user.displayName }}
         </button>
-    </mat-menu>
-    <app-timer></app-timer>
+
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item
+                *ngFor="let link of navLinks"
+                [class.active]="link.index == activeLinkIndex"
+                (click)="navButtonClicked(link)"
+                [disabled] = "link.disabled" >
+                <mat-icon [class.active]="link.index == activeLinkIndex">{{ link.icon }}</mat-icon>
+                <span>{{ link.label }}</span>
+            </button>
+
+            <button mat-menu-item
+                (click)="signOut()" >
+                <!-- <mat-icon >{{ link.icon }}</mat-icon> -->
+                <span>Sign out</span>
+            </button>
+        </mat-menu>
+
+        <app-timer class="timer"></app-timer>
+    </div>
+
+    <ng-template #login>
+        <button mat-flat-button  class="button" (click)="auth.googleSignin()">Sign In</button>
+    </ng-template>
     
 </div>

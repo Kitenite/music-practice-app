@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router'; 
+import { UserAuthService } from '../../shared/services/user-auth.service';
+
 
 @Component({
   selector: 'app-header',
@@ -11,7 +13,10 @@ export class HeaderComponent implements OnInit {
   navLinks: any[];
   activeLinkIndex = -1; 
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    public auth: UserAuthService
+    ) {
     this.navLinks = [
       {
         label: 'Practice',
@@ -29,7 +34,7 @@ export class HeaderComponent implements OnInit {
         label: 'Account',
         link: '/account',
         icon: 'account_circle',
-        disabled: false,
+        disabled: true,
         index: 2
       }
     ];
@@ -44,6 +49,10 @@ export class HeaderComponent implements OnInit {
   navButtonClicked(link){
     this.router.navigate([link.link])
     this.activeLinkIndex = link.index
+  }
+
+  signOut(){
+    this.auth.signOut();
   }
 
 }

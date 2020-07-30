@@ -3,7 +3,7 @@
 #header-container{
     color: $main-txt_color;
     font-size: large;
-    height: 5%;
+    height: fit-content;
     display: inline-block;
     width: 100%;
 }
@@ -11,7 +11,7 @@
 #menu-button{
     font-size: large;
     margin-left: 2vw;
-    width:8rem;
+    width: fit-content;
     border-radius: 0;
     height:3rem;    
     line-height: 3rem;

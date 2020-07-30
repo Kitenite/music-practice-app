@@ -9,10 +9,11 @@ import { UserAuthService } from '../../shared/services/user-auth.service';
 })
 export class AccountComponent implements OnInit {
   items: Observable<any[]>;
+  
   constructor(
     public auth: UserAuthService
     ) {}
-    
+
   ngOnInit(): void {}
 
   signIn(){
