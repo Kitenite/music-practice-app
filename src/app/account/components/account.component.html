@@ -1,8 +1,11 @@
-<button (click)="signIn()"> Sign In </button>
-<button (click)="signUp()"> Sign Up </button>
-<ul>
-    <li class="text" *ngFor="let item of items | async">
-        <p>{{item.name}}</p>
-        <p>{{item.email}}</p>
-    </li>
-</ul>
+<div *ngIf="auth.user$ | async as user; else login">
+    <pre>
+        {{ user | json }}
+    </pre>
+    <hr>
+    <button class="button" (click)="auth.signOut()">Sign Out</button>
+</div>
+
+<ng-template #login>
+    <button class="button" (click)="auth.googleSignin()">Login with Google</button>
+</ng-template>

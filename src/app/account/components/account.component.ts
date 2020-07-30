@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { UserAuthService } from '../../shared/services/user-auth.service';
 
 @Component({
   selector: 'app-account',
@@ -9,9 +9,10 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class AccountComponent implements OnInit {
   items: Observable<any[]>;
-  constructor(firestore: AngularFirestore) {
-    this.items = firestore.collection('users').valueChanges();
-  }
+  constructor(
+    public auth: UserAuthService
+    ) {}
+    
   ngOnInit(): void {}
 
   signIn(){
