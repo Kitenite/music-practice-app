@@ -7,6 +7,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 // Angular
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 // Custom modules
 import { HeaderModule } from './header/header.module';
@@ -35,7 +36,8 @@ const socketConfig: SocketIoConfig = { url: 'https://kallis-practice.herokuapp.c
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
 
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    AngularFireStorageModule
   ],
   exports: [],
   providers: [],

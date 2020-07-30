@@ -1,5 +1,6 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { VideoRecordingService } from '../services/video-recording.service'
+import { UploadStorageService } from '../../../shared/services/upload-storage.service'
 @Component({
   selector: 'record',
   templateUrl: './record.component.html',
@@ -16,7 +17,8 @@ export class RecordComponent implements AfterViewInit{
   isDone:boolean = false;
 
   constructor(
-    private videoRecordingService:VideoRecordingService
+    private videoRecordingService:VideoRecordingService,
+    private uploadService:UploadStorageService
   ) {}
 
   ngAfterViewInit() {
@@ -27,9 +29,9 @@ export class RecordComponent implements AfterViewInit{
 
   toggleRecording(){
     if (!this.isRecording){
-      this.startRecording()
+      this.startRecording();
     } else {
-      this.stopRecording()
+      this.stopRecording();
     }
   }
 
@@ -75,6 +77,13 @@ export class RecordComponent implements AfterViewInit{
   }
 
   uploadRecording(){
-    console.log("Upload")
+    var blob = this.videoRecordingService.getBlob();
+    this.uploadService.uploadVideoBlob(blob);
   }
+
+  handleFileInput(files){
+    console.log(files[0])
+    this.uploadService.uploadFile(files[0])
+  }
+
 }

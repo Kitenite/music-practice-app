@@ -9,6 +9,7 @@
 }
 
 #menu-button{
+    color: $main-txt-color;
     font-size: large;
     margin-left: 2vw;
     width: fit-content;
@@ -19,9 +20,4 @@
 
 .active{
     color: $dark-blue;
-}
-
-.button{
-    color: $main-txt-color;
-    font-size: large;
 }

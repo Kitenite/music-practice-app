@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 
 let RecordRTC = require('recordrtc/RecordRTC.min');
 
@@ -16,8 +15,6 @@ export class VideoRecordingService {
   initRecording(mediaConstraints):Promise<any>{
     return navigator.mediaDevices.getUserMedia(mediaConstraints)
   }
-
-
 
   startRecording(stream: MediaStream) {
     var options = {
@@ -44,5 +41,9 @@ export class VideoRecordingService {
 
   downloadVideo(){
     this.recordRTC.save('video.webm');
+  }
+
+  getBlob(){
+    return this.recordRTC.getBlob();
   }
 }
