@@ -44,7 +44,6 @@ export class MetronomeComponent implements OnInit {
   }
 
   nextBeatReceived(data:NextBeat){
-    console.log("Next beat: ", data.nextBeat)
     this.playerState.tempo = this.metronomeAudio.tempo = data.tempo;
     this.playerState.rate = 60000/data.tempo;
     if (this.playerState.state == PlayerState.Paused){
@@ -52,13 +51,10 @@ export class MetronomeComponent implements OnInit {
     }
     var nextBeat = data.nextBeat
     var timeDifference = nextBeat - Date.now();
-    console.log("RATE:", this.playerState.rate)
     while (timeDifference < 1){
       nextBeat+=this.playerState.rate;
       timeDifference = nextBeat - Date.now();
     }
-
-    console.log(timeDifference)
 
     setTimeout(()=>{
       this.metronomeAudio.play();

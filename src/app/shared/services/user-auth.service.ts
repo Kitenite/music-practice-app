@@ -15,6 +15,7 @@ import { User } from '../models/user';
 export class UserAuthService {
 
   user$: Observable<User>;
+
   constructor(
     private auth: AngularFireAuth,
     private store: AngularFirestore,
@@ -51,5 +52,12 @@ export class UserAuthService {
       displayName: user.displayName
     };
     return userRef.set(data, { merge: true });
+  }
+
+  async isSignedIn(){
+    this.auth.authState.subscribe((res) => {
+        return res != null
+      }
+    )
   }
 }
