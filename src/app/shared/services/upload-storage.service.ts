@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { finalize } from 'rxjs/operators';
 import { UserAuthService } from './user-auth.service';
 import { time } from 'console';
@@ -28,32 +28,25 @@ export class UploadStorageService {
       type: 'video/webm'
     });
     var storagePath = "recordings/"+filePath;
-    // Use task to keep track of progress or pause
+    
     const fileRef = this.storage.ref(storagePath);
     const task = this.storage.upload(storagePath, file);
-
-    // observe percentage changes
-    // get notified when the download URL is available
     task.snapshotChanges().pipe(
         finalize( async() =>  {
           const downloadUrl = await fileRef.getDownloadURL().toPromise();
-          this.handleDownloadUrl(downloadUrl, storagePath)
+          this.addRecordingToDB(downloadUrl, storagePath)
         } )
      )
     .subscribe()
   }
   
-  handleDownloadUrl(downloadURL:string, storagePath){
-    console.log(downloadURL, storagePath)
-    // Upload downloadURL to user db
-      this.auth.user$.subscribe((user) => {
-        if (user){
-          console.log(user)
-          console.log("Recording added")
-          var timeStamp = Date.now();
-          this.store.doc(`users/${user.uid}/recordings/${timeStamp}`).set({ downloadURL: downloadURL, path: storagePath})
-        } else {
-          alert("User not signed in")
+  addRecordingToDB(downloadURL:string, storagePath){
+    this.auth.user$.subscribe((user) => {
+      if (user){
+        var timeStamp = Date.now();
+        this.store.doc(`users/${user.uid}/recordings/${timeStamp}`).set({ downloadURL: downloadURL, path: storagePath})
+      } else {
+        alert("User not signed in")
       }
     })
   }
