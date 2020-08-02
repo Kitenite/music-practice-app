@@ -10,16 +10,20 @@ export class RecordComponent implements AfterViewInit{
 
   @ViewChild('video') videoView;
   video:HTMLVideoElement;
+  isChrome:boolean;
 
   // Recording states
   isRecording: boolean = false;
   isPaused:boolean = false;
   isDone:boolean = false;
 
+
   constructor(
     private videoRecordingService:VideoRecordingService,
     private uploadService:UploadStorageService
-  ) {}
+  ) {
+    this.isChrome = ((navigator.userAgent.toLowerCase().indexOf('chrome') > -1) &&(navigator.vendor.toLowerCase().indexOf("google") > -1));
+  }
 
   ngAfterViewInit() {
     // set the initial state of the video
@@ -57,7 +61,6 @@ export class RecordComponent implements AfterViewInit{
     }
   }
 
-
   stopRecording() {
     this.videoRecordingService.stopRecording(this.processVideo.bind(this));
     this.isRecording = false;
@@ -80,10 +83,4 @@ export class RecordComponent implements AfterViewInit{
     var blob = this.videoRecordingService.getBlob();
     this.uploadService.uploadVideoBlob(blob);
   }
-
-  handleFileInput(files){
-    console.log(files[0])
-    this.uploadService.uploadFile(files[0])
-  }
-
 }

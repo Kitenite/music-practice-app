@@ -16,11 +16,6 @@ export class UploadStorageService {
     private store: AngularFirestore
   ) {}
 
-  uploadFile(file) {
-    const filePath = 'generate-uuid';
-    const task = this.storage.upload(filePath, file);
-  }
-
   uploadVideoBlob(blob) {
     // TODO: Add user UUID at front
     const filePath = Date.now()+".webm";

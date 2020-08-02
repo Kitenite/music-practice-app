@@ -4,6 +4,13 @@
     </pre>
     <hr>
     <button class="button" (click)="auth.signOut()">Sign Out</button>
+    <hr>
+    <div *ngFor="let recording of recordings">
+        <p>{{ recording.downloadURL }}</p>
+        <video width="800" controls>
+            <source [src]="recording.downloadURL" type="video/webm"/>
+        </video>
+    </div>
 </div>
 
 <ng-template #login>
