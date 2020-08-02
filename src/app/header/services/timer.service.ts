@@ -53,8 +53,9 @@ export class TimerService {
         var timeStamp = (new Date).toDateString();
         this.store.doc(`users/${user.uid}/logs/${timeStamp}`).set({
           sessions: firestore.FieldValue.arrayUnion(`${this.startTime} - ${this.endTime}`)
-        }, {merge: true});
-        this.resetTimer();
+        }).finally(()=>{
+          this.resetTimer();
+        }).catch(()=> alert("Something went wrong"))
       } else {
         alert("User not signed in")
       }
