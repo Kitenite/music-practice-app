@@ -24,7 +24,7 @@ export class TimerService {
   
   toggleTimer() {
     if (!this.isPlaying){
-      this.startTime = Date().toString();
+      this.startTime = (new Date).toTimeString();
       this.isPlaying = true;
       this.timeInterval = setInterval(() => {
         this.currentTime+=1;
@@ -46,14 +46,15 @@ export class TimerService {
   }
 
   submitTime(){
-    this.endTime = Date().toString()
+    this.endTime = (new Date).toTimeString()
     console.log(this.startTime, this.endTime)
     this.auth.user$.subscribe((user) => {
       if (user){
         var timeStamp = (new Date).toDateString();
         this.store.doc(`users/${user.uid}/logs/${timeStamp}`).set({
-          sessions: firestore.FieldValue.arrayUnion(`${this.startTime} - ${this.endTime}`)
-        }).finally(()=>{
+          date: timeStamp,
+          sessions: firestore.FieldValue.arrayUnion({startTime: this.startTime, endTime: this.endTime})
+        }, {merge: true}).finally(()=>{
           this.resetTimer();
         }).catch(()=> alert("Something went wrong"))
       } else {

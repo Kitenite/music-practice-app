@@ -1,18 +1,33 @@
+<h1>In development, viewing account information</h1>
 <div *ngIf="auth.user$ | async as user; else login">
     <pre>
         {{ user | json }}
     </pre>
     <hr>
     <button class="button" (click)="auth.signOut()">Sign Out</button>
-    <hr>
-    <div *ngFor="let recording of recordings">
-        <p>{{ recording.downloadURL }}</p>
-        <video width="800" controls>
-            <source [src]="recording.downloadURL" type="video/webm"/>
-        </video>
-    </div>
 </div>
 
 <ng-template #login>
     <button class="button" (click)="auth.googleSignin()">Login with Google</button>
 </ng-template>
+
+<hr>
+<div *ngFor="let recording of recordings">
+    <p>{{ recording.downloadURL }}</p>
+    <video width="300" controls>
+        <source [src]="recording.downloadURL" type="video/webm"/>
+    </video>
+</div>
+
+<div >
+    <p>Sessions:</p>
+    <div *ngFor="let log of logs as Log" >
+        <p>{{ log.date }}</p>
+        <ul>
+            <li *ngFor="let session of log.sessions">
+                <p>{{ session.startTime }} - {{ session.endTime }}</p>
+            </li>
+        </ul>
+    </div>
+    
+</div>

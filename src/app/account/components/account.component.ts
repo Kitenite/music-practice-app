@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { UserAuthService } from '../../shared/services/user-auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Log } from '../../shared/models/log'
 
 @Component({
   selector: 'app-account',
@@ -12,6 +13,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class AccountComponent implements OnInit {
   items: Observable<any[]>;
   recordings;
+  logs:Log[];
 
   constructor(
     public auth: UserAuthService,
@@ -21,12 +23,25 @@ export class AccountComponent implements OnInit {
 
   ngOnInit(): void {
     this.auth.user$.subscribe((user)=>{
-      this.store.collection(`users/${user.uid}/recordings/`).get().subscribe((snapshot)=>{
-        this.recordings = snapshot.docs.map((doc)=>{
-          var data  = doc.data()
-          data.downloadURL =  this.sanitizer.bypassSecurityTrustResourceUrl(data.downloadURL);
-          return data
-        })
+      this.getRecordings(user);
+      this.getSessions(user);
+    })
+  }
+
+  getRecordings(user){
+    this.store.collection(`users/${user.uid}/recordings/`).get().subscribe((snapshot)=>{
+      this.recordings = snapshot.docs.map((doc)=>{
+        var data  = doc.data()
+        data.downloadURL =  this.sanitizer.bypassSecurityTrustResourceUrl(data.downloadURL);
+        return data
+      })
+    })
+  }
+
+  getSessions(user){
+    this.store.collection(`users/${user.uid}/logs/`).get().subscribe((snapshot)=>{
+      this.logs = snapshot.docs.map((doc)=>{
+        return doc.data() as Log
       })
     })
   }
