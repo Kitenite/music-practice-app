@@ -72,7 +72,6 @@ export class RecordComponent implements AfterViewInit{
     this.video.srcObject = null;
     this.video.src = audioVideoWebMURL;
     this.video.load();
-    
   }
 
   downloadRecording() {
@@ -81,6 +80,17 @@ export class RecordComponent implements AfterViewInit{
 
   uploadRecording(){
     var blob = this.videoRecordingService.getBlob();
-    this.uploadService.uploadVideoBlob(blob);
+    this.uploadService.uploadVideoBlob(blob)
+      .finally(()=>{
+        alert("Recording uploaded")
+        this.resetRecording()
+      })
+      .catch((err)=>alert(err))
+  }
+
+  resetRecording(){
+    this.isRecording = false;
+    this.isPaused = false;
+    this.isDone = false;
   }
 }
