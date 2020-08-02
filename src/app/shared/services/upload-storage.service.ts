@@ -3,7 +3,6 @@ import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { finalize } from 'rxjs/operators';
 import { UserAuthService } from './user-auth.service';
-import { time } from 'console';
 
 @Injectable({
   providedIn: 'root'
