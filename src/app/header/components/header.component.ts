@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit {
         label: 'Account',
         link: '/account',
         icon: 'account_circle',
-        disabled: false,
+        disabled: true,
         index: 2
       }
     ];

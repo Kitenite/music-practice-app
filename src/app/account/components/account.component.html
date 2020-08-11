@@ -31,3 +31,10 @@
     </div>
     
 </div>
+
+<div *ngFor="let item of calendar.calendarItems">
+    <pre>
+        {{ item | json }}
+    </pre>
+    <hr>
+</div>

@@ -4,6 +4,7 @@ import { UserAuthService } from '../../shared/services/user-auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Log } from '../../shared/models/log'
+import { CalendarService } from '../../shared/services/calendar.service';
 
 @Component({
   selector: 'app-account',
@@ -18,7 +19,8 @@ export class AccountComponent implements OnInit {
   constructor(
     public auth: UserAuthService,
     private store: AngularFirestore,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    public calendar: CalendarService
   ) {}
 
   ngOnInit(): void {
