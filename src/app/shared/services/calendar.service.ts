@@ -57,7 +57,26 @@ export class CalendarService {
     })
     this.calendarItems = events.result.items
     console.log(this.calendarItems)
-
   }
 
+  async insertEvent(){
+    const insert  = await gapi.client.calendar.events.insert({
+      calendarId: 'primary',
+      start: {
+        dateTime: this.hoursFromNow(2),
+        timeZone: 'America/Los_Angeles'
+      }, 
+      end: {
+        dateTime: this.hoursFromNow(3),
+        timeZone: 'America/Los_Angeles'
+      },
+      summary: 'Testing',
+      description: 'This is my long description'
+
+    })
+  }
+
+  hoursFromNow(hours):string{
+    return new Date(Date.now()+hours*1000*60*60).toISOString()
+  }
 }
