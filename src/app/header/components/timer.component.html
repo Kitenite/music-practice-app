@@ -1,6 +1,6 @@
 <div id="timer-container">
     <div id="time-text-container" >{{ this.timerService.timeInterval ? this.timerService.viewableTime : ""}}</div>
     <button mat-flat-button color="primary" (click)="this.timerService.toggleTimer()">{{ this.timerService.timeInterval ? (this.timerService.isPlaying ? "Pause" : "Resume") : "Start Session"}}</button>
-    <button mat-flat-button color="accent"  (click)="this.timerService.submitTime()" *ngIf="this.timerService.timeInterval && !this.timerService.isPlaying">Submit</button>
+    <button mat-flat-button color="accent"  (click)="submitTime()" *ngIf="this.timerService.timeInterval && !this.timerService.isPlaying">Submit</button>
     <button mat-flat-button (click)="this.timerService.resetTimer()" *ngIf="this.timerService.timeInterval && !this.timerService.isPlaying">Cancel</button>
 </div>

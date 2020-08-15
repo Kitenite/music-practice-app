@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { UserAuthService } from '../../shared/services/user-auth.service';
 import { firestore } from 'firebase/app';
+import { start } from 'repl';
 
 @Injectable({
   providedIn: 'root'
@@ -19,12 +20,12 @@ export class TimerService {
   isPlaying:boolean = false;
 
   // Session data
-  startTime:string;
-  endTime:string;
+  startTime:Date;
+  endTime:Date;
   
   toggleTimer() {
     if (!this.isPlaying){
-      this.startTime = (new Date).toTimeString();
+      this.startTime = new Date()
       this.isPlaying = true;
       this.timeInterval = setInterval(() => {
         this.currentTime+=1;
@@ -46,14 +47,13 @@ export class TimerService {
   }
 
   submitTime(){
-    this.endTime = (new Date).toTimeString()
-    console.log(this.startTime, this.endTime)
+    this.endTime = new Date()
     this.auth.user$.subscribe((user) => {
       if (user){
         var timeStamp = (new Date).toDateString();
         this.store.doc(`users/${user.uid}/logs/${timeStamp}`).set({
           date: timeStamp,
-          sessions: firestore.FieldValue.arrayUnion({startTime: this.startTime, endTime: this.endTime})
+          sessions: firestore.FieldValue.arrayUnion({startTime: this.startTime.toISOString(), endTime: this.endTime.toISOString()})
         }, {merge: true}).finally(()=>{
           this.resetTimer();
         }).catch(()=> alert("Something went wrong"))
