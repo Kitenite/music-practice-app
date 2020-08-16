@@ -1,6 +1,6 @@
 {
-  "name": "practice-app",
-  "short_name": "practice-app",
+  "name": "kpractice",
+  "short_name": "kpractice",
   "theme_color": "#FF972D",
   "background_color": "#ffffff",
   "display": "standalone",

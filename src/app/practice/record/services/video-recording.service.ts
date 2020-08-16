@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 let RecordRTC = require('recordrtc/RecordRTC.min');
+// Need to redownload record RTC in package.json
 
 @Injectable({
   providedIn: 'root'
