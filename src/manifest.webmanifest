@@ -1,8 +1,8 @@
 {
   "name": "practice-app",
   "short_name": "practice-app",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "theme_color": "#FF972D",
+  "background_color": "#ffffff",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
