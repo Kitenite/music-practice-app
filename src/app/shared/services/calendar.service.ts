@@ -52,7 +52,7 @@ export class CalendarService {
 
   async insertEvent(startTime, endTime){
     await gapi.client.load('calendar', 'v3', ()=>{
-      this.signInAuth2().finally( async ()=>{
+      this.signInAuth2().then( async ()=>{
         console.log(startTime, endTime)
         const insert  = await gapi.client.calendar.events.insert({
           calendarId: 'primary',
