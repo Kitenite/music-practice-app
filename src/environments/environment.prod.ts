@@ -11,9 +11,9 @@ export const environment = {
     measurementId: "G-G0SDSMC7E4"
   },
   gapi: {
-    apiKey:'AIzaSyBa-LPeXESxq0tVuVbeuLMtki-r5xWjGO4',
-    clientId: '739774560207-82kvh8tfk8c1cn6oco9ntodp2tli1o2j.apps.googleusercontent.com',
+    apiKey:'AIzaSyB_4xlilDK1F4Wd1G4niHD_04qoH6HaNAc',
+    clientId: '190567119475-rj8og3411mo6qvf4oaurul47ufv5do3h.apps.googleusercontent.com',
     discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
-    scope: 'https://www.googleapis.com/auth/calendar.app.created'
+    scope: 'https://www.googleapis.com/auth/calendar.events'
   }
 };
