@@ -54,7 +54,6 @@ export class UserAuthService {
 
   async initGAPIClient(){
     gapi.load('client', ()=>{
-      console.log("loaded client")
       gapi.client.init(environment.gapi)
       // .then(()=>{
       //   gapi.client.load('calendar', 'v3', () => {
@@ -68,7 +67,6 @@ export class UserAuthService {
       //     })
       //   })
       // })
-      
     })
     
  

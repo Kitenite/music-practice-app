@@ -15,8 +15,6 @@ export class CalendarService {
 
 
   async insertEvent(startTime, endTime){
-    console.log(this.userAuthService.gapi)
-    console.log(this.userAuthService.gapi.client)
     await this.userAuthService.gapi.client.load('calendar', 'v3', async () => {
       console.log(startTime, endTime)
       const insert  = await this.userAuthService.gapi.client.calendar.events.insert({
