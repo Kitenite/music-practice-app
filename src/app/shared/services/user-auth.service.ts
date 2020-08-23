@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { auth } from 'firebase/app';
 
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { User } from '../models/user';
+import { environment } from '../../../environments/environment';
+
+declare var gapi:any;
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +18,17 @@ import { User } from '../models/user';
 export class UserAuthService {
 
   user$: Observable<User>;
-
   constructor(
-    private auth: AngularFireAuth,
+    private afAuth: AngularFireAuth,
     private store: AngularFirestore,
     private router: Router
   ) { 
-    this.user$ = this.auth.authState.pipe(
+    this.getUser()
+    this.initGAPIClient()
+  }
+
+  getUser(){
+    this.user$ = this.afAuth.authState.pipe(
       switchMap(user => {
         if (user) {
           return this.store.doc<User>(`users/${user.uid}`).valueChanges();
@@ -32,14 +39,43 @@ export class UserAuthService {
     );
   }
 
+  get gapi(){
+    return gapi
+  }
+
   async googleSignin() {
-    const provider = new auth.GoogleAuthProvider();
-    const credential = await this.auth.signInWithPopup(provider);
-    return this.updateUserData(credential.user);
+    const googleAuth = gapi.auth2.getAuthInstance()
+    const googleUser = await googleAuth.signIn()
+    const token = googleUser.getAuthResponse().id_token
+    const credential = auth.GoogleAuthProvider.credential(token);
+    const afCredential = await this.afAuth.signInWithCredential(credential)
+    return this.updateUserData(afCredential.user);
+  }
+
+  async initGAPIClient(){
+    gapi.load('client', ()=>{
+      console.log("loaded client")
+      gapi.client.init(environment.gapi)
+      // .then(()=>{
+      //   gapi.client.load('calendar', 'v3', () => {
+      //     console.log("loaded calendar")
+      //     console.log(gapi.client.calendar)
+      //     gapi.client.calendar.calendars.insert({
+      //       "summary": "My Practice Calendar",
+      //       "description": "A calendar for logging practice"
+      //     }).then((res)=>{
+      //       console.log(res)
+      //     })
+      //   })
+      // })
+      
+    })
+    
+ 
   }
 
   async signOut() {
-    await this.auth.signOut();
+    await this.afAuth.signOut();
     return this.router.navigate(['/']);
   }
 
@@ -52,12 +88,5 @@ export class UserAuthService {
       displayName: user.displayName
     };
     return userRef.set(data, { merge: true });
-  }
-
-  async isSignedIn(){
-    this.auth.authState.subscribe((res) => {
-        return res != null
-      }
-    )
   }
 }
