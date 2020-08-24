@@ -11,6 +11,28 @@
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#1976d2">
   <script src="https://apis.google.com/js/api.js" type="text/javascript"></script>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-app.js"></script>
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+      https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/7.19.0/firebase-analytics.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyBggNYDgcJLTo0D1k2J2iLpLmGEaK02bTg",
+      authDomain: "kpractice.firebaseapp.com",
+      databaseURL: "https://kpractice.firebaseio.com",
+      projectId: "kpractice",
+      storageBucket: "kpractice.appspot.com",
+      messagingSenderId: "739774560207",
+      appId: "1:739774560207:web:092858a690a37c822e84ba",
+      measurementId: "G-G0SDSMC7E4"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
 </head>
 <body class="mat-typography">
   <app-root></app-root>

@@ -8,7 +8,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-import { AngularFireAnalyticsModule, ScreenTrackingService } from '@angular/fire/analytics';
+import { AngularFireAnalyticsModule, UserTrackingService, ScreenTrackingService } from '@angular/fire/analytics';
 
 // Custom modules
 import { HeaderModule } from './header/header.module';
@@ -43,6 +43,7 @@ const socketConfig: SocketIoConfig = { url: 'https://kallis-practice.herokuapp.c
   ],
   exports: [],
   providers: [
+    UserTrackingService,
     ScreenTrackingService
   ],
   bootstrap: [
