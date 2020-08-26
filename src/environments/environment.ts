@@ -18,7 +18,7 @@ export const environment = {
     apiKey:'AIzaSyBggNYDgcJLTo0D1k2J2iLpLmGEaK02bTg',
     clientId: '739774560207-82kvh8tfk8c1cn6oco9ntodp2tli1o2j.apps.googleusercontent.com',
     discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
-    scope: 'https://www.googleapis.com/auth/calendar.events'
+    scope: 'https://www.googleapis.com/auth/calendar'
   }
 };
 

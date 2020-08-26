@@ -55,18 +55,6 @@ export class UserAuthService {
   async initGAPIClient(){
     gapi.load('client', ()=>{
       gapi.client.init(environment.gapi)
-      // .then(()=>{
-      //   gapi.client.load('calendar', 'v3', () => {
-      //     console.log("loaded calendar")
-      //     console.log(gapi.client.calendar)
-      //     gapi.client.calendar.calendars.insert({
-      //       "summary": "My Practice Calendar",
-      //       "description": "A calendar for logging practice"
-      //     }).then((res)=>{
-      //       console.log(res)
-      //     })
-      //   })
-      // })
     })
     
  

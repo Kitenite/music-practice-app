@@ -14,14 +14,15 @@ export class TimerComponent implements OnInit {
     private calendarService:CalendarService
     ) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
 
-  }
-
-  submitTime(){
-    if (confirm("This will add the time to your calendar")) {
+  async submitTime(){
+    if (confirm("This will add the session to your Google Calendar")) {
       this.timerService.submitTime()
-      this.calendarService.insertEvent(this.timerService.startTime.toISOString(), this.timerService.endTime.toISOString())
+      const insertResult = await this.calendarService.insertEvent(this.timerService.startTime.toISOString(), this.timerService.endTime.toISOString())
+      if (insertResult == 0) {
+        this.timerService.resetTimer()
+      }
     }
   }
 

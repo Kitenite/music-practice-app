@@ -47,19 +47,19 @@ export class TimerService {
 
   submitTime(){
     this.endTime = new Date()
-    this.auth.user$.subscribe((user) => {
-      if (user){
-        var timeStamp = (new Date).toDateString();
-        this.store.doc(`users/${user.uid}/logs/${timeStamp}`).set({
-          date: timeStamp,
-          sessions: firestore.FieldValue.arrayUnion({startTime: this.startTime.toISOString(), endTime: this.endTime.toISOString()})
-        }, {merge: true}).finally(()=>{
-          this.resetTimer();
-        }).catch(()=> alert("Something went wrong"))
-      } else {
-        alert("User not signed in")
-      }
-    })
+    // Skip submit for now, no reason to save this data since Google Calendar is implemented
+    // this.auth.user$.subscribe((user) => {
+    //   if (user){
+    //     var timeStamp = (new Date).toDateString();
+    //     this.store.doc(`users/${user.uid}/logs/${timeStamp}`).set({
+    //       date: timeStamp,
+    //       sessions: firestore.FieldValue.arrayUnion({startTime: this.startTime.toISOString(), endTime: this.endTime.toISOString()})
+    //     }, {merge: true})
+    //     .catch(()=> alert("Something went wrong"))
+    //   } else {
+    //     alert("User not signed in")
+    //   }
+    // })
   }
 
 }
