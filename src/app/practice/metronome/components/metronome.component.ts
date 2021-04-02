@@ -20,6 +20,8 @@ export class MetronomeComponent implements OnInit {
   private ngUnsubscribe = new Subject();
   playerState:MetronomePlayer = new MetronomePlayer();
   clientCount:number = 1;
+  wakeLock = null;
+
 
   isOnline = false;
 
@@ -29,9 +31,12 @@ export class MetronomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.timeSyncService.subscribeConnect().pipe(takeUntil(this.ngUnsubscribe)).subscribe(event => console.log("Connect: "+event));
+
     this.timeSyncService.subscribeNextBeat().pipe(takeUntil(this.ngUnsubscribe)).subscribe(nextBeat => this.nextBeatReceived(nextBeat));
     this.timeSyncService.subscribeClientCount().pipe(takeUntil(this.ngUnsubscribe)).subscribe(clientCount => this.clientCount = clientCount.count)
     this.isOnline = navigator.onLine;
+    this.requestWakeLock();
   }
 
   ngOnDestroy() {
@@ -41,6 +46,26 @@ export class MetronomeComponent implements OnInit {
     }
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+    this.releaseWakeLock();
+  }
+
+  async requestWakeLock(){
+    if ('wakeLock' in navigator) {
+      try {
+        this.wakeLock = await (navigator as any).wakeLock.request('screen');
+        console.log("Got wake lock")
+
+      } catch (err) {
+        console.log("Can't wake lock")
+      }
+    }
+  }
+
+  releaseWakeLock(){
+    this.wakeLock.release()
+      .then(() => {
+        this.wakeLock = null;
+    });
   }
 
   nextBeatReceived(data:NextBeat){
