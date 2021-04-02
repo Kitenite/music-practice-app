@@ -8,6 +8,7 @@ import { NextBeat } from '../models/next-beat'
 import { MetronomeAudioService } from '../services/metronome-audio.service';
 import { MetronomePlayer } from '../models/metronome-player';
 import { PlayerState } from '../models/player-state-enum'
+import NoSleep from 'nosleep.js';
 
 @Component({
   selector: 'app-metronome',
@@ -20,8 +21,7 @@ export class MetronomeComponent implements OnInit {
   private ngUnsubscribe = new Subject();
   playerState:MetronomePlayer = new MetronomePlayer();
   clientCount:number = 1;
-  wakeLock = null;
-
+  noSleep = new NoSleep();
 
   isOnline = false;
 
@@ -34,7 +34,6 @@ export class MetronomeComponent implements OnInit {
     this.timeSyncService.subscribeNextBeat().pipe(takeUntil(this.ngUnsubscribe)).subscribe(nextBeat => this.nextBeatReceived(nextBeat));
     this.timeSyncService.subscribeClientCount().pipe(takeUntil(this.ngUnsubscribe)).subscribe(clientCount => this.clientCount = clientCount.count)
     this.isOnline = navigator.onLine;
-    this.requestWakeLock();
   }
 
   ngOnDestroy() {
@@ -50,9 +49,8 @@ export class MetronomeComponent implements OnInit {
   async requestWakeLock(){
     if ('wakeLock' in navigator) {
       try {
-        this.wakeLock = await (navigator as any).wakeLock.request('screen');
-        console.log("Got wake lock")
-
+        this.noSleep.enable();
+        // this.wakeLock = await (navigator as any).wakeLock.request('screen');
       } catch (err) {
         console.log("Can't wake lock")
       }
@@ -60,10 +58,11 @@ export class MetronomeComponent implements OnInit {
   }
 
   releaseWakeLock(){
-    this.wakeLock.release()
-      .then(() => {
-        this.wakeLock = null;
-    });
+    this.noSleep.disable();
+    // this.wakeLock.release()
+    //   .then(() => {
+    //     this.wakeLock = null;
+    // });
   }
 
   nextBeatReceived(data:NextBeat){
@@ -89,6 +88,8 @@ export class MetronomeComponent implements OnInit {
 
   // Media client handlers
   emitPlay(){
+    this.requestWakeLock();
+
     // Activate playing onclick, necessary for browsers
     if (this.playerState.firstPlay){
       this.metronomeAudio.play()
