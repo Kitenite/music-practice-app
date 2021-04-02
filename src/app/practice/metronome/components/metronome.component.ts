@@ -31,8 +31,6 @@ export class MetronomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.timeSyncService.subscribeConnect().pipe(takeUntil(this.ngUnsubscribe)).subscribe(event => console.log("Connect: "+event));
-
     this.timeSyncService.subscribeNextBeat().pipe(takeUntil(this.ngUnsubscribe)).subscribe(nextBeat => this.nextBeatReceived(nextBeat));
     this.timeSyncService.subscribeClientCount().pipe(takeUntil(this.ngUnsubscribe)).subscribe(clientCount => this.clientCount = clientCount.count)
     this.isOnline = navigator.onLine;

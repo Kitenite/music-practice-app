@@ -10,10 +10,6 @@ import { NextBeat } from '../models/next-beat';
 export class TimeSyncService {
   constructor(private socket:Socket) { }
 
-  subscribeConenct():Observable<any>{
-    return this.socket.fromEvent('connect');
-  }
-
   // Important setup function to listen for next beat
   subscribeNextBeat():Observable<NextBeat>{
     return this.socket.fromEvent('nextBeatSent');
